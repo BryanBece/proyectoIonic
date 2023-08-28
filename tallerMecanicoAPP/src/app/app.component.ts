@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-  ];
-  public labels = ['Hola'];
-  constructor() {}
+  constructor(private menu: MenuController) {}
+
+  public closeMenu(): void {
+    this.menu.close();
+  }
 }

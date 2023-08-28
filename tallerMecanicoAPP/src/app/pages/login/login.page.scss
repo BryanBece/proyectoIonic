@@ -1,0 +1,14 @@
+ion-content {
+  --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;
+}
+
+ion-item {
+  --background: transparent;
+  --border-color: transparent;
+  --color: #fff;
+}
+
+ion-button {
+  --border-radius: 8px;
+  --box-shadow: none;
+}

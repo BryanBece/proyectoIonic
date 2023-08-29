@@ -32,7 +32,10 @@
             <ion-label position="floating">Confirmar Contraseña</ion-label>
             <ion-input type="password" required></ion-input>
           </ion-item>
-          <ion-button expand="block" color="primary" (click)="presentAlert()">Registrarse</ion-button>
+          <div>
+            <ion-button expand="block" color="light" (click)="presentAlert()">Registrarse</ion-button>
+            <ion-button expand="block" color="medium" routerLink="/home">Volver</ion-button>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>

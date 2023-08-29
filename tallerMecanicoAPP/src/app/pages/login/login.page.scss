@@ -3,12 +3,28 @@ ion-content {
 }
 
 ion-item {
-  --background: transparent;
   --border-color: transparent;
   --color: #fff;
+  --border-radius: 8px;
+  padding-top: 1%;
 }
 
 ion-button {
   --border-radius: 8px;
   --box-shadow: none;
+}
+
+ion-grid {
+  padding-top: 80%;
+}
+
+ion-label{
+  color: black;
+}
+
+div {
+  --border-radius: 8px;
+  margin-top: 3%;
+  margin-left: 25%;
+  padding-right: 5%;
 }

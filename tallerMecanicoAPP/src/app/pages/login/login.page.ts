@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPage implements OnInit {
 
-  constructor() { }
+  usuario: string = "";
+
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
+  iniciarSesion() {
+    console.log("Usuario: " + this.usuario);
+
+    
+
+    let usuario: NavigationExtras = {
+      queryParams: {
+        usuario: this.usuario
+      }
+    }
+    this.router.navigate(['/perfil'], usuario);
+  }
 }

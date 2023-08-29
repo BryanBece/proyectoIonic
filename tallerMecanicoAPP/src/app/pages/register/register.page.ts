@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  templateUrl: 'register.page.html',
+  styleUrls: ['register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage {
 
-  constructor() { }
+  constructor(public alertController: AlertController) {}
 
-  ngOnInit() {
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Registro Exitoso',
+      message: '¡Gracias por registrarte!',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 }

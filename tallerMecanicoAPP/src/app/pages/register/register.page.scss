@@ -1,3 +1,40 @@
 ion-content {
-    --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;            
-  }
+  --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;
+}
+
+ion-content.ion-padding {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 80px;
+}
+
+ion-item {
+  --border-color: transparent;
+  --border-radius: 8px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --highlight-color-focused: transparent;
+  --border-width: 0;
+  padding-top: 1%;
+}
+
+ion-button {
+  --background: #3880ff;
+  --border-radius: 8px;
+  --box-shadow: none;
+}
+
+ion-grid.ion-align-items-center {
+  height: 100%;
+}
+
+ion-grid{
+  padding-top: 40%;
+}
+
+ion-button{
+  --border-radius: 8px;
+}
+
+div {
+  margin-top: 5%;
+}

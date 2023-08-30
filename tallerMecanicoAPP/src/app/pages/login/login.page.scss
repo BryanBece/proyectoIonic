@@ -24,7 +24,23 @@ ion-label{
 
 div {
   --border-radius: 8px;
-  margin-top: 3%;
-  margin-left: 25%;
-  padding-right: 5%;
+  margin-top: 5%;
+  margin-bottom: 3%;
+  padding-bottom: 3%;
+
+}
+
+.login-content {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.login-buttons ion-button {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.login-links ion-button {
+  flex: 1;
+  margin: 0 5px;
 }

@@ -22,3 +22,37 @@ ion-content {
     margin-bottom: 2rem;
     
   }
+
+  h1 {
+    animation: trackingInExpand 2s ease-in-out;
+  }
+
+  h3 {
+    animation: slideInRight 2s ease-in-out;
+  }
+
+  @keyframes trackingInExpand {
+    0% {
+      letter-spacing: -0.5em;
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.6;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideInRight {
+    0% {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  

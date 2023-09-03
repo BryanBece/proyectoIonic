@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
+
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+
 })
 export class LoginPage implements OnInit {
+  usuario = '';
 
-  usuario: string = "";
+  constructor(private router: Router) {}
 
-
-  constructor(private router: Router) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   iniciarSesion() {
-    console.log("Usuario: " + this.usuario);
+    console.log('Usuario: ' + this.usuario);
 
-    
-
-    let usuario: NavigationExtras = {
+    const usuario: NavigationExtras = {
       queryParams: {
-        usuario: this.usuario
-      }
-    }
+        usuario: this.usuario,
+      },
+    };
     this.router.navigate(['/perfil'], usuario);
   }
 }
+
+

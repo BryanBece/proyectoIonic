@@ -13,29 +13,25 @@
       <ion-row>
         <ion-col size-md="6" offset-md="3">
           <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input label="Nombre" label-placement="floating" fill="outline" type="Text" placeholder="Ingrese su nombre."required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Apellido</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input label="Apellido" label-placement="floating" fill="outline" type="Text" placeholder="Ingrese su apellido."required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Rut</ion-label>
-            <ion-input type="text" required></ion-input>
+            <ion-input label="Rut" label-placement="floating" fill="outline" type="Text" placeholder="Ingrese su rut." required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Correo electrónico</ion-label>
-            <ion-input type="email" required></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" required></ion-input>
+            <ion-input label="Correo electrónico" label-placement="floating" fill="outline" type="email" placeholder="Ingrese su correo electrónico." required ></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">Confirmar Contraseña</ion-label>
-            <ion-input type="password" required></ion-input>
+            <ion-input label="Telefono" label-placement="floating" fill="outline" type="tel" placeholder="Ingrese su telefono." required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" label-placement="floating" fill="outline" type="password" placeholder="Ingrese su contraseña." required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Confirmar contraseña" label-placement="floating" fill="outline" type="password" placeholder="Ingrese su contraseña." required></ion-input>
           </ion-item>
           <div>
             <ion-button expand="block" color="light" (click)="presentAlert()">Registrarse</ion-button>

@@ -1,7 +1,7 @@
 ion-content {
-    --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;
-  }
-
-  ion-button {
-    margin-top: 70%;
-  }
+  --background: #ffffff            
+}
+ion-img{
+  max-width: 300px;
+  max-height: 300px;
+}

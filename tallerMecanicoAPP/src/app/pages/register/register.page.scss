@@ -1,6 +1,12 @@
 ion-content {
-  --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;
+  --background: #ffffff   
+
 }
+ion-img{
+  max-width: 300px;
+  max-height: 300px;
+}
+
 
 ion-content.ion-padding {
   --ion-safe-area-top: 20px;
@@ -25,15 +31,16 @@ ion-button {
 ion-grid.ion-align-items-center {
   height: 100%;
 }
-
-ion-grid{
-  padding-top: 50%;
-}
-
 ion-button{
   --border-radius: 8px;
 }
 
 div {
   margin-top: 5%;
+  margin-bottom: 15%;
+}
+
+.login-links ion-button {
+  flex: 1;
+  margin: 0 5px;
 }

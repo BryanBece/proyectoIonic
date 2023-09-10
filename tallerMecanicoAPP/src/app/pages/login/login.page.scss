@@ -1,5 +1,9 @@
 ion-content {
-  --background: url('/assets/images/background.png') 0 0/100% 100% no-repeat;
+  --background: #ffffff            
+}
+ion-img{
+  max-width: 300px;
+  max-height: 300px;
 }
 
 ion-item {
@@ -10,12 +14,6 @@ ion-button {
   --border-radius: 8px;
   --box-shadow: none;
 }
-
-ion-grid {
-  padding-top: 50%;
-}
-
-
 
 div {
   --border-radius: 8px;

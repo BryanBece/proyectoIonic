@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationExtras, Router } from '@angular/router';
-
-
+import { User } from 'src/app/models/user.models';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 
 @Component({
@@ -13,20 +14,32 @@ import { NavigationExtras, Router } from '@angular/router';
 export class LoginPage implements OnInit {
   usuario = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  ngOnInit() {}
 
-  iniciarSesion() {
-    console.log('Usuario: ' + this.usuario);
+  firebaseSvb = inject(FirebaseService);
 
-    const usuario: NavigationExtras = {
-      queryParams: {
-        usuario: this.usuario,
-      },
-    };
-    this.router.navigate(['/perfil'], usuario);
+  form = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
+  })
+
+
+
+  ngOnInit() { }
+
+  Submit() {
+
+    if (this.form.valid) {
+      this.firebaseSvb.signIn(this.form.value as User).then((res) => {
+        console.log(res);
+        this.router.navigate(['/perfil']);
+      }
+      ).catch((err) => {
+        console.log(err);
+      });
+    this.router.navigate(['/perfil']);
   }
 }
 
-
+}

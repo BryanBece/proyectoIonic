@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
 import { User } from 'src/app/models/user.models';
 import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 
 @Component({
@@ -12,12 +12,9 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 
 })
 export class LoginPage implements OnInit {
-  usuario = '';
 
-  constructor(private router: Router) { }
-
-
-  firebaseSvb = inject(FirebaseService);
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -28,18 +25,30 @@ export class LoginPage implements OnInit {
 
   ngOnInit() { }
 
-  Submit() {
+  async Submit() {
 
     if (this.form.valid) {
-      this.firebaseSvb.signIn(this.form.value as User).then((res) => {
+
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+
+      this.firebaseSvc.signIn(this.form.value as User).then((res) => {
         console.log(res);
-        this.router.navigate(['/perfil']);
-      }
-      ).catch((err) => {
-        console.log(err);
+      }).catch(error => {
+        console.log(error);
+
+        this.utilsSvc.presentToast({
+          message: error.message,
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        })
+
+      }).finally(() => {
+        loading.dismiss();
       });
-    this.router.navigate(['/perfil']);
+    }
   }
-}
 
 }

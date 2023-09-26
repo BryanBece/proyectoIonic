@@ -1,61 +1,69 @@
-<ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button menu="start"></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Registro</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="start"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Registro de usuario</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content [fullscreen]="true" class="ion-padding">
-    <ion-grid class="ion-align-items-center">
-      <ion-img
-      src="assets/images/Logo.svg"
-      style="display: block; margin: 0 auto;"
-    ></ion-img>
-      <ion-row>
-        <ion-col size-md="6" offset-md="3">
-          <ion-item>
-            <ion-input label="Nombre" label-placement="floating" fill="solid" type="Text"
-              placeholder="Ingrese su nombre." required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Apellido" label-placement="floating" fill="solid" type="Text"
-              placeholder="Ingrese su apellido." required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Rut" label-placement="floating" fill="solid" type="Text" placeholder="Ingrese su rut."
-              required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Correo electrónico" label-placement="floating" fill="solid" type="email"
-              placeholder="Ingrese su correo electrónico." required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Telefono" label-placement="floating" fill="solid" type="tel"
-              placeholder="Ingrese su telefono." required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Contraseña" label-placement="floating" fill="solid" type="password"
-              placeholder="Ingrese su contraseña." required></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-input label="Confirmar contraseña" label-placement="floating" fill="solid" type="password"
-              placeholder="Ingrese su contraseña." required></ion-input>
-          </ion-item>
-          <div>
-            <ion-button expand="block" color="light" (click)="presentAlert()">Registrarse</ion-button>
-            <ion-button color="medium" expand="block" routerLink="/home">Volver</ion-button>
+<ion-content [fullscreen]="true" class="login-content">
+  <ion-grid class="ion-align-items-center">
+    <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
+    <div class="d-flex-center">
+      <form [formGroup]="form" (ngSubmit)="Submit()" class="auth-form" (keypress.enter)="Submit()">
+
+        <!-- Nombre -->
+        <app-custom-input 
+        icon="person-outline" 
+        type="text" 
+        label="Nombre" 
+        [control]="form.controls.name"
+        autocomplete="name"></app-custom-input>
+        <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+          <div *ngIf="form.controls.name.errors?.['required']">
+            El nombre es requerido.
           </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+          <div *ngIf="form.controls.name.errors?.['minlenght']">
+            El nombre debe tener al menos 3 caracteres.
+          </div>
+        </div>
+
+        <!-- Email -->
+        <app-custom-input 
+        icon="mail-outline" 
+        type="email" 
+        label="Correo Electrónico" 
+        [control]="form.controls.email"
+        autocomplete="email"></app-custom-input>
+        <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+          <div *ngIf="form.controls.email.errors?.['required']">
+            El correo es requerido.
+          </div>
+          <div *ngIf="form.controls.email.errors?.['email']">
+            Ingrese un correo valido.
+          </div>
+        </div>
+
+        <!-- Password -->
+        <app-custom-input 
+        icon="lock-closed-outline" 
+        [control]="form.controls.password" 
+        type="password"
+        label="Contraseña">
+        </app-custom-input>
+        <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
+          <div *ngIf="form.controls.password.errors?.['required']">
+            La contraseña es requerida.
+          </div>
+        </div>
+        <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid" color="medium">
+          Registrarse
+          <ion-icon slot="end" name="person-add-outline"></ion-icon>
+        </ion-button>
+      </form>
+    </div>
+  </ion-grid>
 </ion-content>
 
-<ion-footer>
-  <ion-item>
-    <ion-label>© Desarrollado por: BrThDa</ion-label>
-  </ion-item>
-</ion-footer>
+<app-footer></app-footer>

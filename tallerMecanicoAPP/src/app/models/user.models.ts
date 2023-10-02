@@ -3,4 +3,6 @@ export interface User {
     email: string;
     password: string;
     name: string;
+    telefono: string;
+    perfil: 'cliente' | 'mecanico' | 'admin' | 'administrativo'
 }

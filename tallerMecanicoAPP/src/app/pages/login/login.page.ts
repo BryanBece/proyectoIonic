@@ -34,6 +34,7 @@ export class LoginPage implements OnInit {
 
       this.firebaseSvc.signIn(this.form.value as User).then((res) => {
         console.log(res);
+        this.utilsSvc.routerLink('/home');
       }).catch(error => {
         console.log(error);
 

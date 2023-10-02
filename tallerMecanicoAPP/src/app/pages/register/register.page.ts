@@ -16,9 +16,9 @@ export class RegisterPage {
     uid: new FormControl(''),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required, Validators.minLength(3)])
-
-
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    telefono: new FormControl('', [Validators.required, Validators.minLength(9)]),
+    perfil: new FormControl('cliente'),
     // Añadir mas campos
   })
 
@@ -44,7 +44,7 @@ export class RegisterPage {
         console.log(error);
 
         this.utilsSvc.presentToast({
-          message: error.message,
+          message: 'Problema al crear el usuario. ' + error.message,
           duration: 2500,
           color: 'primary',
           position: 'middle',
@@ -69,9 +69,15 @@ export class RegisterPage {
 
 
       this.firebaseSvc.setDocument(path, this.form.value).then(async res => {
-
         this.utilsSvc.saveInLocalStorage('user', this.form.value);
         this.utilsSvc.routerLink('/home');
+        this.utilsSvc.presentToast({
+          message: 'Usuario creado con exito',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'checkmark-circle-outline'
+        })
         this.form.reset();
 
 
@@ -79,7 +85,7 @@ export class RegisterPage {
         console.log(error);
 
         this.utilsSvc.presentToast({
-          message: error.message,
+          message: 'Problema al crear el usuario',
           duration: 2500,
           color: 'primary',
           position: 'middle',

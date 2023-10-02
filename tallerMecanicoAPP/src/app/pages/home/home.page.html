@@ -5,9 +5,11 @@
     </ion-buttons>
     <ion-title>Inicio</ion-title>
   </ion-toolbar>
+  
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-align-items-center ion-justify-content-center">
+  
   <ion-grid class="ion-align-items-center">
     <ion-img
       src="assets/images/Logo.svg"
@@ -16,8 +18,8 @@
     <h1 class="animated-text">Tu Vehículo en Expertas Manos</h1>
     <h3 class="animated-text">Descubre Nuestros Servicios Mecánicos</h3>
 
-    <ion-button color="medium" routerLink="/login">Iniciar Sesión</ion-button>
-    <ion-button color="medium" routerLink="/register">Registrarse</ion-button>
+    <ion-button color="medium" routerLink="/login" *ngIf="login == false">Iniciar Sesión</ion-button>
+    <ion-button color="medium" routerLink="/register" *ngIf="login == false">Registrarse</ion-button>
   </ion-grid>
 </ion-content>
 

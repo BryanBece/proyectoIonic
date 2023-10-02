@@ -32,12 +32,16 @@ export class FirebaseService {
 
 
 
-
   // ============ Base de datos ============
 
   // Set document
   setDocument(path: string, data: any){
     return setDoc(doc(getFirestore(), path), data);
+  }
+
+  // Get document
+  getDocument<tipo>(path: string, id: string){
+    return this.firestore.collection(path).doc<tipo>(id).valueChanges();
   }
 }
 

@@ -7,14 +7,17 @@ import { FooterComponent } from './component/footer/footer.component';
 
 
 
+
 @NgModule({
   declarations: [
     CustomInputComponent,
-    FooterComponent
+    FooterComponent,
+
   ],
   exports: [
     CustomInputComponent,
-    FooterComponent
+    FooterComponent,
+
   ],
   imports: [
     CommonModule,

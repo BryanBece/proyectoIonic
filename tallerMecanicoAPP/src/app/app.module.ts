@@ -12,6 +12,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import firebase from 'firebase/compat/app';
 
+
 firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({

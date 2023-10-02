@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="start"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Página no encontrada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true" class="d-flex-center">
+    <ion-card-header>
+      <ion-card-subtitle>¿Qué puedes hacer?</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ul>
+        <li>Utiliza el menú de navegación para encontrar la página que estás buscando.</li>
+      </ul>
+    </ion-card-content>
+    <ion-img src="assets/images/error404.png" style="display: block; margin: 0 auto"></ion-img>
+    <ion-button color="medium"  routerLink="/home" class="d-flex-center">
+      Volver
+      <ion-icon slot="end" name="arrow-back-outline"></ion-icon>
+    </ion-button>
+
+</ion-content>
+
+
+<app-footer></app-footer>

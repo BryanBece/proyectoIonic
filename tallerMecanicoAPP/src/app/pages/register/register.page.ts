@@ -18,6 +18,7 @@ export class RegisterPage {
     password: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(3)])
 
+
     // Añadir mas campos
   })
 

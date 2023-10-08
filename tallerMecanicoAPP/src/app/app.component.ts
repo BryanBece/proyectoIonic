@@ -35,7 +35,7 @@ export class AppComponent {
     const path = 'users'
     const id = uid;
     this.firestore.collection(path).doc(id).valueChanges().subscribe( res => {
-      console.log(res);
+      
       const data = res as { perfil: string } | undefined;
       if (data) {
         this.rol = data.perfil

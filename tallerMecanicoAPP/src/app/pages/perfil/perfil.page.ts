@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-perfil',
@@ -8,22 +10,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PerfilPage implements OnInit {
 
-  usuario : string = "";
+  firebaseSvc = inject(FirebaseService);
+  utilsSvc = inject(UtilsService);
 
-  constructor(private rutaActiva : ActivatedRoute) { 
-
-    this.rutaActiva.queryParams.subscribe(params => {
-
-      if(params['usuario'])
-      {
-        this.usuario = params['usuario'];
-      }
-    });
-
-
-  }
-
+  
   ngOnInit() {
   }
 
+  // Cerrar sesión
+  signOut() {
+    this.firebaseSvc.signOut()
+  }
 }

@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MenuController } from '@ionic/angular';
 import { getFirestore, setDoc, doc, FirestoreInstances } from '@angular/fire/firestore';
+import { FirebaseService } from './services/firebase.service';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent {
   firestore = inject(AngularFirestore);
   rol: string = '';
   nombre: string = '';
+  firebaseSvc = inject(FirebaseService);
 
   constructor(private menu: MenuController, private auth: AngularFireAuth) {
     
@@ -48,5 +50,9 @@ export class AppComponent {
 
   public closeMenu(): void {
     this.menu.close();
+  }
+
+  signOut() {
+    this.firebaseSvc.signOut()
   }
 }

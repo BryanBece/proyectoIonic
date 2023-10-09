@@ -1,0 +1,61 @@
+<app-header [isModal]="true" title="Agregar Servicio"></app-header>
+<ion-content>
+
+
+        <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
+          <form [formGroup]="form" (ngSubmit)="Submit()" class="ion-padding ion-text-center" (keypress.enter)="Submit()">
+    
+            <!-- Nombre -->
+            <app-custom-input 
+            type="text" 
+            label="Nombre" 
+            [control]="form.controls.name"
+            autocomplete="name"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+              <div *ngIf="form.controls.name.errors?.['required']">
+                El nombre es requerido.
+              </div>
+              <div *ngIf="form.controls.name.errors?.['minlenght']">
+                El nombre debe tener al menos 3 caracteres.
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <app-custom-input 
+            type="text" 
+            label="Descripcion" 
+            [control]="form.controls.description"
+            autocomplete="description"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.touched">
+              <div *ngIf="form.controls.description.errors?.['required']">
+                La descripción es requerida.
+              </div>
+              <div *ngIf="form.controls.description.errors?.['minlenght']">
+                La descripción debe tener al menos 3 caracteres.
+              </div>
+            </div>
+
+            <!-- Precio -->
+            <app-custom-input 
+            type="number" 
+            label="Precio" 
+            [control]="form.controls.price"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.price.errors && form.controls.price.touched">
+              <div *ngIf="form.controls.price.errors?.['required']">
+                Este campo es requerido.
+              </div>
+              <div *ngIf="form.controls.price.errors?.['min']">
+                El precio mínimo debe ser 0.
+              </div>
+            </div>
+
+            <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid" color="medium">
+              Agregar Servicio
+              <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+            </ion-button>
+          </form>
+
+</ion-content>
+
+
+  

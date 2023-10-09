@@ -4,15 +4,12 @@ import { User } from 'src/app/models/user.models';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service'; 
 
-
 @Component({
-  selector: 'app-register',
-  templateUrl: 'register.page.html',
-  styleUrls: ['register.page.scss'],
+  selector: 'app-add-update-personal',
+  templateUrl: './add-update-personal.component.html',
+  styleUrls: ['./add-update-personal.component.scss'],
 })
-
-
-export class RegisterPage {
+export class AddUpdatePersonalComponent  implements OnInit {
 
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
@@ -23,7 +20,7 @@ export class RegisterPage {
     password: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     telefono: new FormControl('', [Validators.required, Validators.minLength(9)]),
-    perfil: new FormControl('cliente'),
+    perfil: new FormControl(''),
     // Añadir mas campos
   })
 
@@ -75,7 +72,7 @@ export class RegisterPage {
 
       this.firebaseSvc.setDocument(path, this.form.value).then(async res => {
         this.utilsSvc.saveInLocalStorage('user', this.form.value);
-        this.utilsSvc.routerLink('/home');
+        this.utilsSvc.routerLink('/perfil');
         this.utilsSvc.presentToast({
           message: 'Usuario creado con exito',
           duration: 2500,

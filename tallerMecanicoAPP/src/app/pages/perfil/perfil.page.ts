@@ -3,6 +3,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { PersonalComponent } from 'src/app/shared/component/personal/personal.component';
+import { ServiciosComponent } from 'src/app/shared/component/servicios/servicios.component';
 
 @Component({
   selector: 'app-perfil',
@@ -27,6 +29,22 @@ export class PerfilPage implements OnInit {
   
   ngOnInit() {
 
+  }
+
+  // Servicios
+  viewServices(){
+    this.utilsSvc.presentModal({
+      component: ServiciosComponent,
+      cssClass: 'modal-fullscreen'
+    })
+  }
+
+  // Personal
+  viewPersonal(){
+    this.utilsSvc.presentModal({
+      component: PersonalComponent,
+      cssClass: 'modal-fullscreen'
+    })
   }
 
   // Cerrar sesión

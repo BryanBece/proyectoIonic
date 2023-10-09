@@ -72,7 +72,8 @@ export class AddUpdatePersonalComponent  implements OnInit {
 
       this.firebaseSvc.setDocument(path, this.form.value).then(async res => {
         this.utilsSvc.saveInLocalStorage('user', this.form.value);
-        this.utilsSvc.routerLink('/perfil');
+        this.utilsSvc.routerLink('/home');
+        this.firebaseSvc.signOut();
         this.utilsSvc.presentToast({
           message: 'Usuario creado con exito',
           duration: 2500,
@@ -81,7 +82,6 @@ export class AddUpdatePersonalComponent  implements OnInit {
           icon: 'checkmark-circle-outline'
         })
         this.form.reset();
-
 
       }).catch(error => {
         console.log(error);

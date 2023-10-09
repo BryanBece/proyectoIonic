@@ -14,6 +14,7 @@ export class AppComponent {
   login: boolean = false;
   firestore = inject(AngularFirestore);
   rol: string = '';
+  nombre: string = '';
 
   constructor(private menu: MenuController, private auth: AngularFireAuth) {
     
@@ -23,6 +24,7 @@ export class AppComponent {
         console.log('Usuario logueado');
         this.login = true;
         this.getDatosUser(user.uid);
+
 
       } else {
         console.log('Usuario no logueado');

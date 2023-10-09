@@ -1,17 +1,25 @@
-<ion-content [fullscreen]="true">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button menu="start"></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Bienvenido</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="start"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
 
   <ion-img
   src="assets/images/Logo.svg"
   style="display: block; margin: 0 auto;"
 ></ion-img>
+
+  <p *ngIf="rol == 'cliente'">Hola</p>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
   <ion-button expand="block" color="medium"  (click)="signOut()" >Cerrar sesión</ion-button>
 

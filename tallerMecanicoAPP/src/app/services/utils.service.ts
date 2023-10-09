@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { LoadingController, ToastController, ToastOptions } from '@ionic/angular';
 
@@ -10,6 +11,7 @@ export class UtilsService {
   loadingCtrl = inject(LoadingController);
   toastCtrl = inject(ToastController);
   router = inject(Router);
+  firestore = inject(AngularFirestore);
 
 
   loading() {

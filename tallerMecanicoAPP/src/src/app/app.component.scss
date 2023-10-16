@@ -1,0 +1,14 @@
+ion-toolbar {
+    --background: #000000;
+    --color: #fff;
+
+    ion-buttons {
+        margin-right: 8px;
+    }
+
+    ion-button.menu-button {
+        --background: transparent;
+        --color: #fff;
+    }
+}
+

@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { PersonalComponent } from 'src/app/shared/component/personal/personal.component';
+import { ProductosComponent } from 'src/app/shared/component/productos/productos.component';
 import { ServiciosComponent } from 'src/app/shared/component/servicios/servicios.component';
 
 @Component({
@@ -47,6 +48,13 @@ export class PerfilPage implements OnInit {
     })
   }
 
+  // Productos
+  viewProducts(){
+    this.utilsSvc.presentModal({
+      component: ProductosComponent,
+      cssClass: 'modal-fullscreen'
+    })
+  }
   // Cerrar sesión
   signOut() {
     this.firebaseSvc.signOut()

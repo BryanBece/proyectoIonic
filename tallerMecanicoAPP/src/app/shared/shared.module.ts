@@ -9,6 +9,8 @@ import { HeaderComponent } from './component/header/header.component';
 import { AddUpdateServicesComponent } from './component/add-update-services/add-update-services.component';
 import { PersonalComponent } from './component/personal/personal.component';
 import { AddUpdatePersonalComponent } from './component/add-update-personal/add-update-personal.component';
+import { ProductosComponent } from './component/productos/productos.component';
+import { AddUpdateProductsComponent } from './component/add-update-products/add-update-products.component';
 
 
 
@@ -22,7 +24,9 @@ import { AddUpdatePersonalComponent } from './component/add-update-personal/add-
     HeaderComponent,
     AddUpdateServicesComponent,
     PersonalComponent,
-    AddUpdatePersonalComponent
+    AddUpdatePersonalComponent,
+    ProductosComponent,
+    AddUpdateProductsComponent,
   ],
   exports: [
     CustomInputComponent,
@@ -31,7 +35,9 @@ import { AddUpdatePersonalComponent } from './component/add-update-personal/add-
     HeaderComponent,
     AddUpdateServicesComponent,
     PersonalComponent,
-    AddUpdatePersonalComponent
+    AddUpdatePersonalComponent,
+    ProductosComponent,
+    AddUpdateProductsComponent,
   ],
   imports: [
     CommonModule,

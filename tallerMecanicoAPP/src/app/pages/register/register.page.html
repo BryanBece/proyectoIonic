@@ -14,12 +14,8 @@
       <form [formGroup]="form" (ngSubmit)="Submit()" class="auth-form" (keypress.enter)="Submit()">
 
         <!-- Nombre -->
-        <app-custom-input 
-        icon="person-outline" 
-        type="text" 
-        label="Nombre" 
-        [control]="form.controls.name"
-        autocomplete="name"></app-custom-input>
+        <app-custom-input icon="person-outline" type="text" label="Nombre" [control]="form.controls.name"
+          autocomplete="name"></app-custom-input>
         <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
           <div *ngIf="form.controls.name.errors?.['required']">
             El nombre es requerido.
@@ -30,12 +26,8 @@
         </div>
 
         <!-- Email -->
-        <app-custom-input 
-        icon="mail-outline" 
-        type="email" 
-        label="Correo Electrónico" 
-        [control]="form.controls.email"
-        autocomplete="email"></app-custom-input>
+        <app-custom-input icon="mail-outline" type="email" label="Correo Electrónico" [control]="form.controls.email"
+          autocomplete="email"></app-custom-input>
         <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
           <div *ngIf="form.controls.email.errors?.['required']">
             El correo es requerido.
@@ -46,12 +38,8 @@
         </div>
 
         <!-- Celular -->
-        <app-custom-input 
-        icon="call-outline" 
-        type="tel" 
-        label="Celular" 
-        [control]="form.controls.telefono"
-        autocomplete="telefono"></app-custom-input>
+        <app-custom-input icon="call-outline" type="tel" label="Celular" [control]="form.controls.telefono"
+          autocomplete="telefono"></app-custom-input>
         <div class="validators" *ngIf="form.controls.telefono.errors && form.controls.telefono.touched">
           <div *ngIf="form.controls.telefono.errors?.['required']">
             El celular es requerido.
@@ -62,11 +50,8 @@
         </div>
 
         <!-- Password -->
-        <app-custom-input 
-        icon="lock-closed-outline" 
-        [control]="form.controls.password" 
-        type="password"
-        label="Contraseña">
+        <app-custom-input icon="lock-closed-outline" [control]="form.controls.password" type="password"
+          label="Contraseña">
         </app-custom-input>
         <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
           <div *ngIf="form.controls.password.errors?.['required']">
@@ -77,7 +62,7 @@
           Registrarse
           <ion-icon slot="end" name="person-add-outline"></ion-icon>
         </ion-button>
-        <ion-button color="medium"  routerLink="/home">
+        <ion-button color="medium" routerLink="/home">
           Volver
           <ion-icon slot="end" name="arrow-back-outline"></ion-icon>
         </ion-button>

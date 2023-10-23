@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,11 @@ async takePicture(promptLabelHeader: string) {
     return this.modalCtrl.dismiss(data);
   }
 
+  // Ubicación
+  async getLocation() {
+    const coordinates = await Geolocation.getCurrentPosition();
+    return coordinates.coords;
+  }
 
   // Navegacion
   routerLink(url: string) {

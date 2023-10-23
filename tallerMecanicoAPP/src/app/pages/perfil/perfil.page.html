@@ -9,19 +9,29 @@
 
 <ion-content>
 
-  <ion-img
-  src="assets/images/Logo.svg"
-  style="display: block; margin: 0 auto;"
-></ion-img>
-  <div class="d-flex-center"> 
-    <ion-button  *ngIf="rol === 'admin'" (click)="viewPersonal()" mode="ios" class="ion-margin" color="tertiary">Personal</ion-button>
-    <ion-button  *ngIf="rol === 'admin'" (click)="viewServices()" mode="ios" class="ion-margin" color="tertiary">Servicios</ion-button>
-    <ion-button  *ngIf="rol === 'admin'" (click)="viewProducts()" mode="ios" class="ion-margin" color="tertiary">Productos</ion-button>
+  <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto;"></ion-img>
+  <div class="d-flex-center" *ngIf="rol === 'admin'" >
+    <ion-segment value="perfil" (ionChange)="segmentChanged($event)">
+      <ion-segment-button value="personal"  (click)="viewPersonal()">
+        Personal
+      </ion-segment-button>
+      <ion-segment-button value="servicios" (click)="viewServices()">
+        Servicios
+      </ion-segment-button>
+      <ion-segment-button value="productos" (click)="viewProducts()">
+        Productos
+      </ion-segment-button>
+    </ion-segment>
   </div>
-  <div class="d-flex-center">  
-    <ion-button color="medium" (click)="signOut()" >Cerrar sesión</ion-button>
+  <div class="d-flex-center" *ngIf="rol === 'cliente'" >
+    <ion-button expand="block" mode="ios" shape="round">
+      Servicio Emergencia
+    </ion-button>
   </div>
 
+  <div class="d-flex-center">
+    <ion-button color="medium" (click)="signOut()">Cerrar sesión</ion-button>
+  </div>
 
 </ion-content>
 

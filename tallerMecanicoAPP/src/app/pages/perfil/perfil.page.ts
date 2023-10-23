@@ -6,6 +6,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { PersonalComponent } from 'src/app/shared/component/personal/personal.component';
 import { ProductosComponent } from 'src/app/shared/component/productos/productos.component';
 import { ServiciosComponent } from 'src/app/shared/component/servicios/servicios.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -19,7 +20,7 @@ export class PerfilPage implements OnInit {
   firestore = inject(AngularFirestore);
   rol: string = '';
 
-  constructor(private auth: AngularFireAuth) {
+  constructor(private auth: AngularFireAuth, private router: Router) {
     this.auth.authState.subscribe(user => {
       if (user) {
         this.getDatosUser(user.uid);
@@ -32,11 +33,24 @@ export class PerfilPage implements OnInit {
 
   }
 
+    /**
+   * Función que permite navegar entre componentes
+   * mediante la URL
+   * @param $event 
+   */
+    segmentChanged($event){
+      console.log($event.detail.value);
+      let direction=$event.detail.value;
+      this.router.navigate(['perfil/'+direction]);
+    }
+
+
+    
   // Servicios
   viewServices(){
     this.utilsSvc.presentModal({
       component: ServiciosComponent,
-      cssClass: 'modal-fullscreen'
+      cssClass: 'modal-fullscreen',
     })
   }
 
@@ -55,6 +69,10 @@ export class PerfilPage implements OnInit {
       cssClass: 'modal-fullscreen'
     })
   }
+
+  
+
+
   // Cerrar sesión
   signOut() {
     this.firebaseSvc.signOut()

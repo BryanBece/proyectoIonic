@@ -1,11 +1,26 @@
 <app-header [isModal]="true" title="Servicios"></app-header>
 <ion-content>
-
   <!-- NUEVO SERVICIO -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addUpdateService()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdateService()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <ion-item *ngFor="let service of services">
+      <ion-label>
+        <h2>{{ service.name }}</h2>
+        <p>{{ service.description }}</p>
+        <p>Precio: {{ service.price }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" >
+          <ion-icon class="icon" name="create" size="large"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" >
+          <ion-icon class="icon" name="trash" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 </ion-content>

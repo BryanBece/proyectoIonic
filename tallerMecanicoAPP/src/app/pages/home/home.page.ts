@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MenuController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
+import { Service } from 'src/app/models/user.models';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +13,10 @@ import { ApiService } from 'src/app/services/api.service';
 export class HomePage implements OnInit {
   login: boolean = false;
   listaComentarios: any[] = [];
+  services: Service[] = [];
 
-  constructor(private menu: MenuController, private auth: AngularFireAuth, private api: ApiService) {
+
+  constructor(private menu: MenuController, private auth: AngularFireAuth, private api: ApiService, private firebaseSvc: FirebaseService) {
     this.auth.authState.subscribe(user => {
       if (user) {
         this.login = true;
@@ -24,6 +28,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.getComentarios();
+    this.getServices();
   }
 
   getComentarios() {
@@ -36,4 +41,11 @@ export class HomePage implements OnInit {
       }
     );
   }
+
+  getServices() {
+    this.firebaseSvc.getServices().subscribe((services) => {
+      this.services = services;
+    });
+  }
+
 }

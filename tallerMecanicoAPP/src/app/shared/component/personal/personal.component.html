@@ -1,11 +1,29 @@
 <app-header [isModal]="true" title="Personal"></app-header>
 <ion-content>
-
   <!-- NUEVO PERSONAL -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addUpdatePersonal()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdatePersonal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  
+  <!-- Mostrar el personal -->
+  <ion-list>
+    <ion-item *ngFor="let user of users">
+      <ion-label>
+        <h2>{{ user.name }}</h2>
+        <p>Telefono: {{ user.telefono }}</p>
+        <p>Email: {{ user.email }}</p>
+        <p>Perfil: {{ user.perfil }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary">
+          <ion-icon class="icon" name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger">
+          <ion-icon class="icon" name="trash"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -11,6 +11,8 @@ import { PersonalComponent } from './component/personal/personal.component';
 import { AddUpdatePersonalComponent } from './component/add-update-personal/add-update-personal.component';
 import { ProductosComponent } from './component/productos/productos.component';
 import { AddUpdateProductsComponent } from './component/add-update-products/add-update-products.component';
+import { PedidosComponent } from './component/pedidos/pedidos.component';
+import { AddUpdatePedidoComponent } from './component/add-update-pedidos/add-update-pedidos.component';
 
 
 
@@ -27,6 +29,8 @@ import { AddUpdateProductsComponent } from './component/add-update-products/add-
     AddUpdatePersonalComponent,
     ProductosComponent,
     AddUpdateProductsComponent,
+    PedidosComponent,
+    AddUpdatePedidoComponent,
   ],
   exports: [
     CustomInputComponent,
@@ -38,6 +42,8 @@ import { AddUpdateProductsComponent } from './component/add-update-products/add-
     AddUpdatePersonalComponent,
     ProductosComponent,
     AddUpdateProductsComponent,
+    PedidosComponent,
+    AddUpdatePedidoComponent,
   ],
   imports: [
     CommonModule,

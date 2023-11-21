@@ -8,6 +8,7 @@ import { ProductosComponent } from 'src/app/shared/component/productos/productos
 import { ServiciosComponent } from 'src/app/shared/component/servicios/servicios.component';
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
+import { PedidosComponent } from 'src/app/shared/component/pedidos/pedidos.component';
 
 @Component({
   selector: 'app-perfil',
@@ -68,6 +69,14 @@ export class PerfilPage implements OnInit {
   viewProducts(){
     this.utilsSvc.presentModal({
       component: ProductosComponent,
+      cssClass: 'modal-fullscreen'
+    })
+  }
+
+  // Pedidos
+  viewOrders(){
+    this.utilsSvc.presentModal({
+      component: PedidosComponent,
       cssClass: 'modal-fullscreen'
     })
   }

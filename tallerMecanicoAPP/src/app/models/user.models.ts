@@ -6,3 +6,28 @@ export interface User {
     telefono: string;
     perfil: 'cliente' | 'mecanico' | 'admin' | 'administrativo'
 }
+
+export interface Pedido {
+    id: string;
+    proveedor: string;
+    producto: string;
+    cantidad: number;
+    precio: number;
+  }
+
+  export interface Service {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+  }
+
+  export interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    image: string;
+    // Otros atributos que puedas tener en tu modelo
+  }

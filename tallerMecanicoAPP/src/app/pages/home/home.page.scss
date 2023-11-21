@@ -33,9 +33,10 @@ ion-content {
     margin-bottom: 1rem;
   }
 
-  .commentsList{
+  .commentsList, .servicesList {
     border: 1px solid #bebebe;
     margin: 20px;
+    background-color: #f2f2f2;
   }
   
   h3 {

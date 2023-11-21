@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.models';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service'; 
 
@@ -41,31 +40,22 @@ export class AddUpdateProductsComponent  implements OnInit {
 
 
   async Submit() {
-
     if (this.form.valid) {
-
-      let path = 'users/' + this.user.uid + '/products';
-
+      let path = 'products'; // Update the path to the main path
       const loading = await this.utilsSvc.loading();
       await loading.present();
-
       // Subir imagen y obtener url
-
       let dataUrl = this.form.value.image;
-      let imagePath = this.user.uid+`/${Date.now()}`;
+      let imagePath = `${Date.now()}`;
       let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
       this.form.controls.image.setValue(imageUrl);
-
       delete this.form.value.id;
-
       this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
-
         this.utilsSvc.dismissModal( { success: true });
         console.log(path);
         console.log(imageUrl);
         console.log(this.user);
         console.log(`${this.user.uid}`);
-
         this.utilsSvc.presentToast({
           message: 'Producto creado correctamente',
           duration: 2500,
@@ -73,10 +63,8 @@ export class AddUpdateProductsComponent  implements OnInit {
           position: 'middle',
           icon: 'checkmark-circle-outline'
         })
-
       }).catch(error => {
         console.log(error);
-
         this.utilsSvc.presentToast({
           message: 'Problema al crear el usuario. ' + error.message,
           duration: 2500,
@@ -84,7 +72,6 @@ export class AddUpdateProductsComponent  implements OnInit {
           position: 'middle',
           icon: 'alert-circle-outline'
         })
-
       }).finally(() => {
         loading.dismiss();
       });

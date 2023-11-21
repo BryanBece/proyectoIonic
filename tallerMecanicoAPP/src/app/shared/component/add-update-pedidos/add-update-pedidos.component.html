@@ -1,0 +1,54 @@
+<app-header [isModal]="true" title="Realizar Pedido"></app-header>
+<ion-content>
+  <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
+  <div class="d-flex-center">
+    <form [formGroup]="form" (ngSubmit)="Submit()" class="auth-form" (keypress.enter)="Submit()">
+      <!-- Proveedor -->
+      <app-custom-input icon="business-outline" type="text" label="Proveedor" [control]="form.controls.proveedor"
+        autocomplete="proveedor"></app-custom-input>
+      <div class="validators" *ngIf="form.controls.proveedor.errors && form.controls.proveedor.touched">
+        <div *ngIf="form.controls.proveedor.errors?.['required']">
+          El proveedor es requerido.
+        </div>
+        <div *ngIf="form.controls.proveedor.errors?.['minlenght']">
+          El proveedor debe tener al menos 3 caracteres.
+        </div>
+      </div>
+      <!-- Producto -->
+      <app-custom-input icon="cube-outline" type="text" label="Producto" [control]="form.controls.producto"
+        autocomplete="producto"></app-custom-input>
+      <div class="validators" *ngIf="form.controls.producto.errors && form.controls.producto.touched">
+        <div *ngIf="form.controls.producto.errors?.['required']">
+          El producto es requerido.
+        </div>
+        <div *ngIf="form.controls.producto.errors?.['minlenght']">
+          El producto debe tener al menos 3 caracteres.
+        </div>
+      </div>
+      <!-- Cantidad -->
+      <app-custom-input icon="calculator-outline" type="number" label="Cantidad" [control]="form.controls.cantidad"
+        autocomplete="cantidad"></app-custom-input>
+      <div class="validators" *ngIf="form.controls.cantidad.errors && form.controls.cantidad.touched">
+        <div *ngIf="form.controls.cantidad.errors?.['required']">
+          La cantidad es requerida.
+        </div>
+        <div *ngIf="form.controls.cantidad.errors?.['min']">
+          La cantidad debe ser mayor que cero.
+        </div>
+      </div>
+      <!-- Precio -->
+      <app-custom-input icon="cash-outline" type="number" label="Precio" [control]="form.controls.precio"
+        autocomplete="precio"></app-custom-input>
+      <div class="validators" *ngIf="form.controls.precio.errors && form.controls.precio.touched">
+        <div *ngIf="form.controls.precio.errors?.['required']">
+          El precio es requerido.
+        </div>
+        <div *ngIf="form.controls.precio.errors?.['min']">
+          El precio debe ser mayor que cero.
+        </div>
+      </div>
+      <!-- Botón de enviar -->
+      <ion-button type="submit" expand="block" color="primary" [disabled]="!form.valid">Enviar</ion-button>
+    </form>
+  </div>
+</ion-content>

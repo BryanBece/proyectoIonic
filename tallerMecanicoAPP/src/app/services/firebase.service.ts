@@ -3,10 +3,10 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "firebase/auth";
 import { Pedido, Service, User, Product } from '../models/user.models';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query } from '@angular/fire/firestore';
+import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { getStorage, uploadString, ref, getDownloadURL } from 'firebase/storage';
+import { getStorage, uploadString, ref, getDownloadURL, deleteObject } from 'firebase/storage';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -168,6 +168,15 @@ export class FirebaseService {
     return setDoc(doc(getFirestore(), path), data);
   }
 
+  updateDocument(path: string, data: any) {
+    return updateDoc(doc(getFirestore(), path), data);
+  }
+
+  deleteDocument(path: string) {
+    return deleteDoc(doc(getFirestore(), path));
+  }
+
+
   /**
    * Obtener un documento de Firestore.
    * @param path - La ruta del documento.
@@ -200,4 +209,14 @@ async uploadImage(path: string, data: any) {
     return getDownloadURL(ref(getStorage(), path));
   });
 }
+
+async getFilePath(url: string) {
+  return ref(getStorage(), url).fullPath;
+}
+
+deleteImage(path: string) {
+  return deleteObject(ref(getStorage(), path));
+}
+
+
 }

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
+import { AlertController, AlertOptions, LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
 
@@ -15,6 +15,7 @@ export class UtilsService {
   modalCtrl = inject(ModalController);
   router = inject(Router);
   firestore = inject(AngularFirestore);
+  alertCtrl = inject(AlertController);
 
   
 
@@ -29,6 +30,12 @@ async takePicture(promptLabelHeader: string) {
     promptLabelPicture: 'Toma una foto',
   });
 };
+
+async presentAlert(opts?: AlertOptions) {
+  const alert = await this.alertCtrl.create(opts);
+
+  await alert.present();
+}
 
 
   loading() {

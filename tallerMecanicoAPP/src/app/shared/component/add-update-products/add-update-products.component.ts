@@ -1,5 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Product } from 'src/app/models/user.models';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service'; 
 
@@ -10,6 +11,8 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class AddUpdateProductsComponent  implements OnInit {
 
+  @Input() product: Product;
+
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
 
@@ -17,9 +20,8 @@ export class AddUpdateProductsComponent  implements OnInit {
     id: new FormControl(''),
     name: new FormControl('', [Validators.required, Validators.minLength(3)]),
     description: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    price: new FormControl('', [Validators.required, Validators.min(0)]),
+    price: new FormControl(null, [Validators.required, Validators.min(0)]),
     image: new FormControl('', [Validators.required]),
-    soldUnits: new FormControl('', [Validators.required, Validators.min(0)]),
     // Añadir mas campos
   })
 
@@ -27,6 +29,10 @@ export class AddUpdateProductsComponent  implements OnInit {
 
   ngOnInit() { 
     this.utilsSvc.getFromLocalStorage('user');
+
+    if (this.product) {
+      this.form.setValue(this.product);
+    }
   }
 
   user = this.utilsSvc.getFromLocalStorage('user');
@@ -38,9 +44,18 @@ export class AddUpdateProductsComponent  implements OnInit {
     
   }
 
-
-  async Submit() {
+  Submit(){
     if (this.form.valid) {
+      if (this.product) {
+        this.updateProduct();
+      } else {
+        this.createProduct();
+      }
+    }
+  }
+
+
+  async createProduct() {
       let path = 'products'; // Update the path to the main path
       const loading = await this.utilsSvc.loading();
       await loading.present();
@@ -66,7 +81,7 @@ export class AddUpdateProductsComponent  implements OnInit {
       }).catch(error => {
         console.log(error);
         this.utilsSvc.presentToast({
-          message: 'Problema al crear el usuario. ' + error.message,
+          message: 'Problema al crear el producto. ' + error.message,
           duration: 2500,
           color: 'primary',
           position: 'middle',
@@ -75,7 +90,49 @@ export class AddUpdateProductsComponent  implements OnInit {
       }).finally(() => {
         loading.dismiss();
       });
-    }
   }
+
+  // Actualizar producto
+
+  async updateProduct() {
+      let path = `products/${this.product.id}`; // Update the path to the main path
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+      // Subir imagen y obtener url
+      if(this.form.value.image !== this.product.image){
+        let dataUrl = this.form.value.image;
+        let imagePath = await this.firebaseSvc.getFilePath(this.product.image);
+        let imageUrl = await this.firebaseSvc.uploadImage(imagePath, dataUrl);
+        this.form.controls.image.setValue(imageUrl);
+      }
+
+
+      delete this.form.value.id;
+
+
+      this.firebaseSvc.updateDocument(path, this.form.value).then(async res => {
+        this.utilsSvc.dismissModal( { success: true });
+        this.utilsSvc.presentToast({
+          message: 'Producto actualizado correctamente',
+          duration: 2500,
+          color: 'success',
+          position: 'middle',
+          icon: 'checkmark-circle-outline'
+        })
+      }).catch(error => {
+        console.log(error);
+        this.utilsSvc.presentToast({
+          message: 'Problema al actualizar el producto. ' + error.message,
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        })
+      }).finally(() => {
+        loading.dismiss();
+      });
+  }
+
+
 
 }

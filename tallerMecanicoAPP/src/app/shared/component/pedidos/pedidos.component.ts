@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
-import { AddUpdatePedidoComponent } from '../add-update-pedidos/add-update-pedidos.component';
+import { AddUpdatePedidoComponent } from '../add-update-pedido/add-update-pedido.component';
 import { Pedido } from 'src/app/models/user.models';
 
 

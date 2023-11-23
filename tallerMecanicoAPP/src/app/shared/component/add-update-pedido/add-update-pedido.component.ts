@@ -7,8 +7,8 @@ import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-update-pedido',
-  templateUrl: './add-update-pedidos.component.html',
-  styleUrls: ['./add-update-pedidos.component.scss'],
+  templateUrl: './add-update-pedido.component.html',
+  styleUrls: ['./add-update-pedido.component.scss'],
 })
 export class AddUpdatePedidoComponent implements OnInit {
   constructor(

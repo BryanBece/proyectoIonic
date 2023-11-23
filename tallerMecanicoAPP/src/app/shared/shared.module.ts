@@ -12,7 +12,7 @@ import { AddUpdatePersonalComponent } from './component/add-update-personal/add-
 import { ProductosComponent } from './component/productos/productos.component';
 import { AddUpdateProductsComponent } from './component/add-update-products/add-update-products.component';
 import { PedidosComponent } from './component/pedidos/pedidos.component';
-import { AddUpdatePedidoComponent } from './component/add-update-pedidos/add-update-pedidos.component';
+import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-update-pedido.component';
 
 
 

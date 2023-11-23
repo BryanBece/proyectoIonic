@@ -128,9 +128,8 @@ export class FirebaseService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.firestore.collection<User>('users', ref => ref.where('perfil', 'in', ['administrativo', 'mecanico'])).valueChanges();
+    return this.firestore.collection<User>('users', ref => ref.where('perfil', 'in', ['administrativo', 'mecanico']).where('active', '==', true)).valueChanges();
   }
-
   getProducts(): Observable<Product[]> {
     this.productsCollection = this.firestore.collection<Product>('products');
     this.products = this.productsCollection.snapshotChanges().pipe(

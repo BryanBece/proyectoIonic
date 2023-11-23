@@ -1,7 +1,13 @@
 ion-content {
-  --background: #ffffff            
+  --background: #ffffff;
 }
-ion-img{
+
+ion-img {
   max-width: 300px;
   max-height: 300px;
+}
+
+ion-button {
+  --color: ##292929;
+  --background: #bdbdbd;
 }

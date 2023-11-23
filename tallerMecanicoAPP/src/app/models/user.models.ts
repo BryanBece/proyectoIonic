@@ -4,7 +4,8 @@ export interface User {
     password: string;
     name: string;
     telefono: string;
-    perfil: 'cliente' | 'mecanico' | 'admin' | 'administrativo'
+    perfil: 'cliente' | 'mecanico' | 'admin' | 'administrativo';
+    active: boolean;
 }
 
 export interface Pedido {

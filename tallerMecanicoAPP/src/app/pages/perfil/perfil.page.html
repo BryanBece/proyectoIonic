@@ -11,26 +11,22 @@
 
   <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto;"></ion-img>
 
-  <!-- =========== ADMIN =========== -->
-  <div class="d-flex-center" *ngIf="rol === 'admin'" >
-    <ion-segment value="perfil" (ionChange)="segmentChanged($event)">
-      <ion-segment-button value="personal"  (click)="viewPersonal()">
-        Personal
-      </ion-segment-button>
-      <ion-segment-button value="servicios" (click)="viewServices()">
-        Servicios
-      </ion-segment-button>
-      <ion-segment-button value="productos" (click)="viewProducts()">
-        Productos
-      </ion-segment-button>
-      <ion-segment-button value="productos" (click)="viewOrders()">
-        Pedidos
-      </ion-segment-button>
-    </ion-segment>
+  <div class="d-flex-center" *ngIf="rol === 'admin'">
+    <ion-button (click)="viewPersonal()"  mode="ios" shape="round">
+      Personal
+    </ion-button>
+    <ion-button (click)="viewServices()"  mode="ios" shape="round">
+      Servicios
+    </ion-button>
+    <ion-button (click)="viewProducts()"  mode="ios" shape="round">
+      Productos
+    </ion-button>
+    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+      Pedidos
+    </ion-button>
   </div>
 
-    <!-- =========== USUARIO =========== -->
-  <div class="d-flex-center" *ngIf="rol === 'cliente'" >
+  <div class="d-flex-center" *ngIf="rol === 'cliente'">
     <ion-button (click)="obtUbicacion()" expand="block" mode="ios" shape="round">
       Obtener ubicación
     </ion-button>
@@ -39,7 +35,6 @@
   <div class="d-flex-center">
     <ion-button color="medium" (click)="signOut()">Cerrar sesión</ion-button>
   </div>
-
 </ion-content>
 
 <app-footer></app-footer>

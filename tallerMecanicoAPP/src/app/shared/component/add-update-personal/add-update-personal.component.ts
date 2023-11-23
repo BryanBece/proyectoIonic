@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.models';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -10,6 +10,8 @@ import { UtilsService } from 'src/app/services/utils.service';
   styleUrls: ['./add-update-personal.component.scss'],
 })
 export class AddUpdatePersonalComponent  implements OnInit {
+
+  @Input() user: User;
 
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
@@ -26,8 +28,19 @@ export class AddUpdatePersonalComponent  implements OnInit {
 
   ngOnInit() { }
 
+  Submit(){
+    if (this.form.valid) {
+      if(this.user){
+        this.updateUserInfo(this.user.uid);
+      }else{
+        this.newUser();
+      }
+    }
+  }
 
-  async Submit() {
+
+
+  async newUser() {
 
     if (this.form.valid) {
 
@@ -97,6 +110,44 @@ export class AddUpdatePersonalComponent  implements OnInit {
       }).finally(() => {
         loading.dismiss();
       });
+    }
+  }
+
+  async updateUserInfo(uid: string) {
+    if (this.form.valid) {
+      const loading = await this.utilsSvc.loading();
+      await loading.present();
+  
+      try {
+        const path = `users/${uid}`; // Ruta de la colección
+        delete this.form.value.password;
+  
+        await this.firebaseSvc.updateDocument(path, this.form.value);
+  
+        this.utilsSvc.saveInLocalStorage('user', this.form.value);
+        this.utilsSvc.routerLink('/home');
+        this.firebaseSvc.signOut();
+        this.utilsSvc.presentToast({
+          message: 'Usuario actualizado con éxito',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'checkmark-circle-outline'
+        });
+  
+        this.form.reset();
+      } catch (error) {
+        console.log(error);
+        this.utilsSvc.presentToast({
+          message: 'Problema al actualizar el usuario',
+          duration: 2500,
+          color: 'primary',
+          position: 'middle',
+          icon: 'alert-circle-outline'
+        });
+      } finally {
+        loading.dismiss();
+      }
     }
   }
 }

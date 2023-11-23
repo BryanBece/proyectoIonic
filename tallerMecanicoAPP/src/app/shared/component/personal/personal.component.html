@@ -17,6 +17,9 @@
         <p>Perfil: {{ user.perfil }}</p>
       </ion-label>
       <ion-buttons slot="end">
+        <ion-button color="primary" (click)="addUpdatePersonal(user)" >
+          <ion-icon class="icon" name="create" size="large"></ion-icon>
+        </ion-button>
         <ion-button color="danger" (click)="confirmDeactivatePersonal(user)">
           <ion-icon class="icon" name="trash"></ion-icon>
         </ion-button>

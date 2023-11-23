@@ -12,8 +12,7 @@ export interface Pedido {
     id: string;
     proveedor: string;
     producto: string;
-    cantidad: number;
-    precio: number;
+    fecha: string;
   }
 
   export interface Service {

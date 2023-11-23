@@ -20,6 +20,8 @@ export class FirebaseService {
   products: Observable<Product[]>;
   private usersCollection: AngularFirestoreCollection<User>;
   users: Observable<User[]>;
+  private ordersCollection: AngularFirestoreCollection<Pedido>;
+  orders: Observable<Pedido[]>;
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsSvc = inject(UtilsService);
@@ -125,6 +127,20 @@ export class FirebaseService {
       })
     );
     return this.services;
+  }
+
+  getOrders(): Observable<Pedido[]> {
+    this.ordersCollection = this.firestore.collection<Pedido>('orders');
+    this.orders = this.ordersCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Pedido;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+    return this.orders;
   }
 
   getUsers(): Observable<User[]> {

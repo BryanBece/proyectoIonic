@@ -1,11 +1,31 @@
 <app-header [isModal]="true" title="Pedidos"></app-header>
 <ion-content>
-
-  <!-- NUEVO SERVICIO -->
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addUpdatePedidos()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
-
+  <!-- NUEVO PEDIDO -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addUpdatePedidos()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-list>
+    <ion-item *ngFor="let pedido of pedidos">
+      <ion-label>
+        <h2>Proveedor: {{ pedido.proveedor }}</h2>
+        <p>Productos: {{ pedido.producto }}</p>
+        <p>ID: {{ pedido.id }}</p>
+        <p>Fecha: {{ pedido.fecha }}</p>
+      </ion-label>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="addUpdatePedidos(pedido)" >
+          <ion-icon class="icon" name="create" size="large"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="confirmDeleteOrder(pedido)">
+          <ion-icon class="icon" name="trash" size="large"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+  <div *ngIf="pedidos.length === 0" class="empty">
+    <ion-icon name="shield-outline"></ion-icon>
+    <h3>No hay pedidos disponibles</h3>
+  </div>
 </ion-content>

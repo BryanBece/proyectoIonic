@@ -48,7 +48,6 @@ export class AddUpdateServicesComponent implements OnInit {
     await loading.present();
   
     try {
-      // Subir imagen y obtener URL
       delete this.form.value.id;
   
       await this.firebaseSvc.addDocument(path, this.form.value);

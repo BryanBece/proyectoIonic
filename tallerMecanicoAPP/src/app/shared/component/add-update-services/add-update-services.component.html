@@ -1,4 +1,4 @@
-<app-header [isModal]="true" title="Agregar Servicio"></app-header>
+<app-header [isModal]="true" [title]="service ? 'Actualizar Servicio' : 'Agregar Servicio'"></app-header>
 <ion-content>
   <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
   <form [formGroup]="form" (ngSubmit)="Submit()" class="ion-padding ion-text-center" (keypress.enter)="Submit()">
@@ -44,7 +44,7 @@
       </div>
     </div>
     <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid" color="medium">
-      Agregar Servicio
+      {{service ? 'Actualizar Servicio' : 'Agregar Servicio'}}
       <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
     </ion-button>
   </form>

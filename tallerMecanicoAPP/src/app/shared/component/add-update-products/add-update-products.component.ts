@@ -67,10 +67,6 @@ export class AddUpdateProductsComponent  implements OnInit {
       delete this.form.value.id;
       this.firebaseSvc.addDocument(path, this.form.value).then(async res => {
         this.utilsSvc.dismissModal( { success: true });
-        console.log(path);
-        console.log(imageUrl);
-        console.log(this.user);
-        console.log(`${this.user.uid}`);
         this.utilsSvc.presentToast({
           message: 'Producto creado correctamente',
           duration: 2500,

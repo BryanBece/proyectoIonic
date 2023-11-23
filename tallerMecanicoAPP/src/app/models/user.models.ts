@@ -28,7 +28,6 @@ export interface Pedido {
     name: string;
     description: string;
     price: number;
-    quantity: number;
     image: string;
     // Otros atributos que puedas tener en tu modelo
   }

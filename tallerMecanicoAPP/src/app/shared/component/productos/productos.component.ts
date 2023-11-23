@@ -24,6 +24,7 @@ export class ProductosComponent implements OnInit {
 
     this.firebaseSvc.getProducts().subscribe((products) => {
       this.products = products;
+      console.log(this.products);
       this.loading = false; // Ocultar el loading
     });
   }

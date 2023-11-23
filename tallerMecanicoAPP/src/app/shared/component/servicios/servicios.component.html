@@ -14,13 +14,18 @@
         <p>Precio: {{ service.price }}</p>
       </ion-label>
       <ion-buttons slot="end">
-        <ion-button color="primary" >
+        <ion-button color="primary" (click)="addUpdateService(service)">
           <ion-icon class="icon" name="create" size="large"></ion-icon>
         </ion-button>
-        <ion-button color="danger" >
+        <ion-button color="danger" (click)="confirmDeleteService(service)" >
           <ion-icon class="icon" name="trash" size="large"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-item>
   </ion-list>
+
+  <div *ngIf="services.length === 0" class="empty">
+    <ion-icon name="shield-outline"></ion-icon>
+    <h3>No hay servicios disponibles</h3>
+  </div>
 </ion-content>

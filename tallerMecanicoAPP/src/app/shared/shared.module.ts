@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomInputComponent } from './component/custom-input/custom-input.component';
 import { IonicModule } from '@ionic/angular';
@@ -13,10 +13,6 @@ import { ProductosComponent } from './component/productos/productos.component';
 import { AddUpdateProductsComponent } from './component/add-update-products/add-update-products.component';
 import { PedidosComponent } from './component/pedidos/pedidos.component';
 import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-update-pedido.component';
-
-
-
-
 
 @NgModule({
   declarations: [
@@ -47,9 +43,10 @@ import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-upda
   ],
   imports: [
     CommonModule,
-    IonicModule,
+    IonicModule.forRoot(),
     ReactiveFormsModule,
-    FormsModule
-  ]
+    FormsModule,
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class SharedModule { }

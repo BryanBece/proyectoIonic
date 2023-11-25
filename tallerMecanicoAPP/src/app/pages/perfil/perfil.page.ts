@@ -9,6 +9,8 @@ import { ServiciosComponent } from 'src/app/shared/component/servicios/servicios
 import { Router } from '@angular/router';
 import { Geolocation } from '@capacitor/geolocation';
 import { PedidosComponent } from 'src/app/shared/component/pedidos/pedidos.component';
+import { AttentionsComponent } from 'src/app/shared/component/attentions/attentions.component';
+import { TakeHoursComponent } from 'src/app/shared/component/take-hours/take-hours.component';
 
 @Component({
   selector: 'app-perfil',
@@ -73,6 +75,21 @@ export class PerfilPage implements OnInit {
     })
   }
 
+  // Atenciones
+  viewAtteentions(){
+    this.utilsSvc.presentModal({
+      component: AttentionsComponent,
+      cssClass: 'modal-fullscreen'
+    })
+  }
+
+  // Agendar Hora
+  scheduleAppointment(){
+    this.utilsSvc.presentModal({
+      component: TakeHoursComponent,
+      cssClass: 'modal-fullscreen',
+    });
+  }
   // Pedidos
   viewOrders(){
     this.utilsSvc.presentModal({

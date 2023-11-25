@@ -30,3 +30,16 @@ export interface Pedido {
     image: string;
     // Otros atributos que puedas tener en tu modelo
   }
+
+export interface Attentions{
+  id: string;
+  date: string;
+  description: string;
+  service?: string;
+  name: string;
+  email: string;
+  phone: string;
+  vehicle: string;
+  status: 'pendiente' | 'en proceso' | 'finalizado' | 'cancelado';
+
+}

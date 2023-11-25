@@ -11,6 +11,8 @@
 
   <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto;"></ion-img>
 
+
+  <!-- ====================== ADMIN  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'admin'">
     <ion-button (click)="viewPersonal()"  mode="ios" shape="round">
       Personal
@@ -26,6 +28,33 @@
     </ion-button>
   </div>
 
+  <!-- ====================== ADMINISTRATIVO  ====================== -->
+  <div class="d-flex-center" *ngIf="rol === 'administrativo'">
+    <ion-button (click)="viewAtteentions()"  mode="ios" shape="round">
+      Atenciones
+    </ion-button>
+    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+      Pedidos
+    </ion-button>
+    <ion-button (click)="scheduleAppointment()"   mode="ios" shape="round">
+      Agendar Horas
+    </ion-button>
+  </div>
+
+  <!-- ====================== MECANICO  ====================== -->
+  <div class="d-flex-center" *ngIf="rol === 'mecanico'">
+    <ion-button (click)="viewPersonal()"  mode="ios" shape="round">
+      Atenciones
+    </ion-button>
+    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+      Pedidos
+    </ion-button>
+    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+      Agendar Horas
+    </ion-button>
+  </div>
+
+  <!-- ====================== CLIENTE  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'cliente'">
     <ion-button (click)="obtUbicacion()" expand="block" mode="ios" shape="round">
       Obtener ubicación

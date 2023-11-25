@@ -1,0 +1,17 @@
+ion-img{
+    max-width: 300px;
+    max-height: 300px;
+  }
+.date{
+  border: 1px solid #e0e0e0;
+  border-color: #e0e0e0;
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 1px;
+  --margin: 20px 0;
+
+  ion-label {
+    position: relative;
+    bottom: 2px;
+}
+}

@@ -13,6 +13,8 @@ import { ProductosComponent } from './component/productos/productos.component';
 import { AddUpdateProductsComponent } from './component/add-update-products/add-update-products.component';
 import { PedidosComponent } from './component/pedidos/pedidos.component';
 import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-update-pedido.component';
+import { AttentionsComponent } from './component/attentions/attentions.component';
+import { TakeHoursComponent } from './component/take-hours/take-hours.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-upda
     AddUpdateProductsComponent,
     PedidosComponent,
     AddUpdatePedidoComponent,
+    AttentionsComponent,
+    TakeHoursComponent,
   ],
   exports: [
     CustomInputComponent,
@@ -40,6 +44,8 @@ import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-upda
     AddUpdateProductsComponent,
     PedidosComponent,
     AddUpdatePedidoComponent,
+    AttentionsComponent,
+    TakeHoursComponent
   ],
   imports: [
     CommonModule,

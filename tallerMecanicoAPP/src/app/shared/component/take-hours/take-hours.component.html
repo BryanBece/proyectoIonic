@@ -1,0 +1,101 @@
+<app-header [isModal]="true" title="Agendar Hora"></app-header>
+<ion-content>
+    <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
+
+    <div class="d-flex-center">
+        <form [formGroup]="form" (ngSubmit)="Submit()" class="auth-form" (keypress.enter)="Submit()">
+
+            <!-- Nombre -->
+            <app-custom-input icon="person-outline" type="text" label="Nombre" [control]="form.controls.name"
+                autocomplete="name"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.name.errors && form.controls.name.touched">
+                <div *ngIf="form.controls.name.errors?.['required']">
+                    El nombre es requerido.
+                </div>
+                <div *ngIf="form.controls.name.errors?.['minlenght']">
+                    El nombre debe tener al menos 3 caracteres.
+                </div>
+            </div>
+
+            <!-- Email -->
+            <app-custom-input icon="mail-outline" type="email" label="Correo Electrónico"
+                [control]="form.controls.email" autocomplete="email"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+                <div *ngIf="form.controls.email.errors?.['required']">
+                    El correo es requerido.
+                </div>
+                <div *ngIf="form.controls.email.errors?.['email']">
+                    Ingrese un correo valido.
+                </div>
+            </div>
+
+            <!-- Celular -->
+            <app-custom-input icon="call-outline" type="tel" label="Celular" [control]="form.controls.telefono"
+                autocomplete="telefono"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.telefono.errors && form.controls.telefono.touched">
+                <div *ngIf="form.controls.telefono.errors?.['required']">
+                    El celular es requerido.
+                </div>
+                <div *ngIf="form.controls.telefono.errors?.['tel']">
+                    Ingrese un celular valido.
+                </div>
+            </div>
+
+            <!-- Fecha -->
+            <div class="date">
+                <ion-item lines="none">
+                    <ion-icon slot="start" name="calendar-outline"></ion-icon>
+                    <ion-label>Fecha</ion-label>
+                    <ion-datetime-button datetime="datetime" [required]="true"></ion-datetime-button>
+                </ion-item>
+                <div class="validators" *ngIf="form.controls.date.errors && form.controls.date.touched">
+                    <div *ngIf="form.controls.date.errors?.['required']">
+                        La fecha es requerida.
+                    </div>
+                    <div *ngIf="form.controls.date.errors?.['min']">
+                        La fecha debe ser superior a hoy.
+                    </div>
+                </div>
+                <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                        <ion-datetime id="datetime" presentation="date" mode="ios" [showDefaultButtons]="true"
+                            doneText="Confirmar" cancelText="Cancelar" [min]="getMinDate()"
+                            [required]="true" (ionChange)="onDateChange($event)"></ion-datetime>
+                    </ng-template>
+                </ion-modal>
+            </div>
+
+            
+            <!-- Vehiculo -->
+            <app-custom-input icon="car-outline" type="text" label="Vehículo" [control]="form.controls.vehicle"
+                autocomplete="vehicle"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.vehicle.errors && form.controls.vehicle.touched">
+                <div *ngIf="form.controls.vehicle.errors?.['required']">
+                    El vehículo es requerido.
+                </div>
+                <div *ngIf="form.controls.vehicle.errors?.['minlength']">
+                    El vehículo debe tener al menos 3 caracteres.
+                </div>
+            </div>
+
+            <!-- Descripcion -->
+            <app-custom-input icon="create-outline" type="text" label="Descripción"
+                [control]="form.controls.description" autocomplete="description"></app-custom-input>
+            <div class="validators" *ngIf="form.controls.description.errors && form.controls.description.touched">
+                <div *ngIf="form.controls.description.errors?.['required']">
+                    La descripción es requerida.
+                </div>
+                <div *ngIf="form.controls.description.errors?.['minlength']">
+                    La descripción debe tener al menos 3 caracteres.
+                </div>
+            </div>
+
+
+            <ion-button expand="block" mode="ios" class="submit" type="submit" [disabled]="form.invalid"
+                color="primary">
+                Agendar Hora
+                <ion-icon slot="end" name="person-add-outline"></ion-icon>
+            </ion-button>
+        </form>
+    </div>
+</ion-content>

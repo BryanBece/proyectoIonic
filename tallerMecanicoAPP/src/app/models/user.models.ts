@@ -32,7 +32,7 @@ export interface Pedido {
   }
 
 export interface Attentions{
-  id: string;
+  cliente_id: string;
   date: string;
   description: string;
   service?: string;
@@ -40,6 +40,6 @@ export interface Attentions{
   email: string;
   phone: string;
   vehicle: string;
-  status: 'pendiente' | 'en proceso' | 'finalizado' | 'cancelado';
+  status: 'pendiente' | 'aceptada' | 'finalizado' | 'cancelado';
 
 }

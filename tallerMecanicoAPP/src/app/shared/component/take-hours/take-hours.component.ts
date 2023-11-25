@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { format, parseISO } from 'date-fns';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-take-hours',
@@ -18,7 +19,7 @@ export class TakeHoursComponent  implements OnInit {
   rol: string = '';
 
 form = new FormGroup({
-  id: new FormControl(''),
+  cliente_id: new FormControl(''),
   date: new FormControl(''),
   description: new FormControl('', [Validators.required, Validators.minLength(3)]),
   status: new FormControl(''),
@@ -31,23 +32,30 @@ form = new FormGroup({
 
   ngOnInit() {
     this.form.controls.date.setValue(this.getMinDate());
-    console.log(this.form.value.date);
   }
 
-  onDateChange(event: any) {
-    const selectedDate = event.detail.value;
-    this.form.controls.date.setValue(selectedDate);
-    console.log(this.form.value.date);
+  constructor(private auth: AngularFireAuth) {
+    this.auth.authState.subscribe(user => {
+      if (user) {
+        this.getDatosUser(user.uid);
+      } else {
+      }
+    });
   }
-  
-  
+
+ 
 
   async Submit(){
     const path = 'appointments'; // Update the path to the main path
     const loading = await this.utilsSvc.loading();
     await loading.present();
     try {
-      delete this.form.value.id;
+      if (this.rol === 'cliente') {
+        this.form.controls.status.setValue('pendiente');
+      } else if (this.rol === 'administrativo' || this.rol === 'mecanico' || this.rol === 'administrador') {
+        this.form.controls.status.setValue('aceptada');
+      }
+  
       this.form.controls.date.setValue(format(parseISO(this.form.value.date), 'dd/MM/yyyy'));
       await this.firebaseSvc.addDocument(path, this.form.value);
       this.utilsSvc.dismissModal({ success: true });
@@ -78,7 +86,6 @@ form = new FormGroup({
     const loading = await this.utilsSvc.loading();
     await loading.present();
     try {
-      delete this.form.value.id;
       await this.firebaseSvc.addDocument(path, this.form.value);
       this.utilsSvc.dismissModal({ success: true });
       this.utilsSvc.presentToast({
@@ -102,7 +109,7 @@ form = new FormGroup({
     }
   }
 
-  // Fecha minima para el datepicker
+  // =================== Fechas ===================
   getMinDate(): string {
     const today = new Date();
     const year = today.getFullYear();
@@ -116,6 +123,14 @@ form = new FormGroup({
     return num.toString().padStart(2, '0');
   }
 
+  onDateChange(event: any) {
+    const selectedDate = event.detail.value;
+    this.form.controls.date.setValue(selectedDate);
+    console.log(this.form.value.date);
+  }
+
+  // =================== FIN FECHAS ===================
+
   // Obtener rol
   getDatosUser( uid: string ){
     const path = 'users'
@@ -123,9 +138,10 @@ form = new FormGroup({
     this.firestore.collection(path).doc(id).valueChanges().subscribe( res => {
       
       
-      const data = res as { perfil: string } | undefined;
+      const data = res as { perfil: string, uid: string} | undefined;
       if (data) {
         this.rol = data.perfil
+        this.form.controls.cliente_id.setValue(data.uid);
       }
     })
     

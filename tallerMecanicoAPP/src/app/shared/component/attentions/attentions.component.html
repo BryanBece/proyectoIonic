@@ -1,23 +1,102 @@
 <app-header [isModal]="true" title="Atenciones"></app-header>
-
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button >
+  <ion-fab-button (click)="addAttention()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
-
 <ion-content>
-<!-- Pendientes -->
-
-
-<!-- Aceptadas -->
-
-
-<!-- Realizadas -->
-
-
-<!-- Rechazadas -->
-
-
-
+  <!-- Pendientes -->
+  <div>
+    <ion-list>
+      <h2 class="d-flex-center">Horas Pendientes</h2>
+      <ion-item-group *ngFor="let attention of attentions">
+        <ion-item-divider *ngIf="attention.status === 'Pendiente'">
+          <ion-label>
+            <h2>Nombre: {{ attention.name}}</h2>
+            <p>Fecha: {{ attention.date }}</p>
+            <p>Celular: {{ attention.phone }}</p>
+            <p>Correo: {{ attention.email }}</p>
+            <p>Vehiculo: {{ attention.vehicle }}</p>
+            <p>Descripción: {{ attention.description }}</p>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="primary">
+              <ion-icon class="icon" name="create" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="confirmCancelAttention(attention)">
+              <ion-icon class="icon" name="close" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="success" (click)="confirmAcceptAttention(attention)">
+              <ion-icon class="icon" name="checkmark" size="large"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
+  <!-- Aceptadas -->
+  <div>
+    <ion-list>
+      <h2 class="d-flex-center">Horas Aceptadas</h2>
+      <ion-item-group *ngFor="let attention of attentions">
+        <ion-item-divider *ngIf="attention.status === 'Aceptada'">
+          <ion-label>
+            <h2>Nombre: {{ attention.name}}</h2>
+            <p>Fecha: {{ attention.date }}</p>
+            <p>Celular: {{ attention.phone }}</p>
+            <p>Correo: {{ attention.email }}</p>
+            <p>Vehiculo: {{ attention.vehicle }}</p>
+            <p>Descripción: {{ attention.description }}</p>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="primary">
+              <ion-icon class="icon" name="create" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="confirmCancelAttention(attention)">
+              <ion-icon class="icon" name="close" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="success" (click)="confirmFinishtAttention(attention)">
+              <ion-icon class="icon" name="checkmark" size="large"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
+  <!-- Realizadas -->
+  <div>
+    <ion-list>
+      <h2 class="d-flex-center">Horas Realizadas</h2>
+      <ion-item-group *ngFor="let attention of attentions">
+        <ion-item-divider *ngIf="attention.status === 'Finalizada'">
+          <ion-label>
+            <h2>Nombre: {{ attention.name}}</h2>
+            <p>Fecha: {{ attention.date }}</p>
+            <p>Celular: {{ attention.phone }}</p>
+            <p>Correo: {{ attention.email }}</p>
+            <p>Vehiculo: {{ attention.vehicle }}</p>
+            <p>Descripción: {{ attention.description }}</p>
+          </ion-label>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
+  <!-- Rechazadas -->
+  <div>
+    <ion-list>
+      <h2 class="d-flex-center">Horas Canceladas</h2>
+      <ion-item-group *ngFor="let attention of attentions">
+        <ion-item-divider *ngIf="attention.status === 'Cancelada'">
+          <ion-label>
+            <h2>Nombre: {{ attention.name}}</h2>
+            <p>Fecha: {{ attention.date }}</p>
+            <p>Celular: {{ attention.phone }}</p>
+            <p>Correo: {{ attention.email }}</p>
+            <p>Vehiculo: {{ attention.vehicle }}</p>
+            <p>Descripción: {{ attention.description }}</p>
+          </ion-label>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
 </ion-content>

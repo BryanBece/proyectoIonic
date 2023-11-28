@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "firebase/auth";
-import { Pedido, Service, User, Product } from '../models/user.models';
+import { Pedido, Service, User, Product, Attentions } from '../models/user.models';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
@@ -22,6 +22,9 @@ export class FirebaseService {
   users: Observable<User[]>;
   private ordersCollection: AngularFirestoreCollection<Pedido>;
   orders: Observable<Pedido[]>;
+  private attentionsCollection: AngularFirestoreCollection<Attentions>;
+  attendances: Observable<Attentions[]>;
+
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
   utilsSvc = inject(UtilsService);
@@ -158,6 +161,20 @@ export class FirebaseService {
       })
     );
     return this.products;
+  }
+
+  getAttentions(): Observable<Attentions[]> {
+    this.attentionsCollection = this.firestore.collection<Attentions>('appointments');
+    this.attendances = this.attentionsCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Attentions;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+    return this.attendances;
   }
 
   // ============ Base de datos ============

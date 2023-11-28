@@ -25,7 +25,7 @@ form = new FormGroup({
   status: new FormControl(''),
   email: new FormControl('', [Validators.required, Validators.email]),
   name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-  telefono: new FormControl('', [Validators.required, Validators.minLength(9)]),
+  phone: new FormControl('', [Validators.required, Validators.minLength(9)]),
   vehicle: new FormControl('', [Validators.required, Validators.minLength(3)]),
 });
 
@@ -51,9 +51,9 @@ form = new FormGroup({
     await loading.present();
     try {
       if (this.rol === 'cliente') {
-        this.form.controls.status.setValue('pendiente');
+        this.form.controls.status.setValue('Pendiente');
       } else if (this.rol === 'administrativo' || this.rol === 'mecanico' || this.rol === 'administrador') {
-        this.form.controls.status.setValue('aceptada');
+        this.form.controls.status.setValue('Aceptada');
       }
   
       this.form.controls.date.setValue(format(parseISO(this.form.value.date), 'dd/MM/yyyy'));

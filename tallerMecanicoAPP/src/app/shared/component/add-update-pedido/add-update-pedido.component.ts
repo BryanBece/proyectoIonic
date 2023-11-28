@@ -23,6 +23,7 @@ export class AddUpdatePedidoComponent implements OnInit {
     proveedor: new FormControl('', [Validators.required, Validators.minLength(3)]),
     producto: new FormControl(''),
     fecha: new FormControl(formatDate(new Date(), 'dd/MM/yyyy', 'en-US')),
+    status: new FormControl('Pendiente'),
   });
 
   ngOnInit() {

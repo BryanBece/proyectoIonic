@@ -6,26 +6,54 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-list>
-    <ion-item *ngFor="let pedido of pedidos">
-      <ion-label>
-        <h2>Proveedor: {{ pedido.proveedor }}</h2>
-        <p>Productos: {{ pedido.producto }}</p>
-        <p>ID: {{ pedido.id }}</p>
-        <p>Fecha: {{ pedido.fecha }}</p>
-      </ion-label>
-      <ion-buttons slot="end">
-        <ion-button color="primary" (click)="addUpdatePedidos(pedido)" >
-          <ion-icon class="icon" name="create" size="large"></ion-icon>
-        </ion-button>
-        <ion-button color="danger" (click)="confirmDeleteOrder(pedido)">
-          <ion-icon class="icon" name="trash" size="large"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
-  </ion-list>
+
+    <!-- Pendientes -->
+  <div>
+    <ion-list>
+      <h2 class="d-flex-center">Pedidos Pendientes</h2>
+      <ion-item-group *ngFor="let pedido of pedidos">
+        <ion-item-divider *ngIf="pedido.status === 'Pendiente'">
+          <ion-label>
+            <h2>Proveedor: {{ pedido.proveedor }}</h2>
+            <p>Productos: {{ pedido.producto }}</p>
+            <p>ID: {{ pedido.id }}</p>
+            <p>Fecha: {{ pedido.fecha }}</p>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="primary" (click)="addUpdatePedidos(pedido)">
+              <ion-icon class="icon" name="create" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="confirmDeleteOrder(pedido)">
+              <ion-icon class="icon" name="close" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="success" (click)="confirmFinishtAttention(pedido)">
+              <ion-icon class="icon" name="checkmark" size="large"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
   <div *ngIf="pedidos.length === 0" class="empty">
     <ion-icon name="shield-outline"></ion-icon>
     <h3>No hay pedidos disponibles</h3>
   </div>
+
+    <!-- Pendientes -->
+    <div>
+      <ion-list>
+        <h2 class="d-flex-center">Pedidos Finalizados</h2>
+        <ion-item-group *ngFor="let pedido of pedidos">
+          <ion-item-divider *ngIf="pedido.status === 'Finalizada'">
+            <ion-label>
+              <h2>Proveedor: {{ pedido.proveedor }}</h2>
+              <p>Productos: {{ pedido.producto }}</p>
+              <p>ID: {{ pedido.id }}</p>
+              <p>Fecha: {{ pedido.fecha }}</p>
+            </ion-label>
+          </ion-item-divider>
+        </ion-item-group>
+      </ion-list>
+    </div>
+
 </ion-content>

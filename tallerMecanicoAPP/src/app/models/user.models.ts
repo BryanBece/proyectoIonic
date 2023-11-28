@@ -13,6 +13,7 @@ export interface Pedido {
     proveedor: string;
     producto: string;
     fecha: string;
+    status: 'Pendiente' | 'Finalizada'
   }
 
   export interface Service {

@@ -8,57 +8,139 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto;"></ion-img>
-
+  <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
 
   <!-- ====================== ADMIN  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'admin'">
-    <ion-button (click)="viewPersonal()"  mode="ios" shape="round">
+    <ion-button (click)="viewPersonal()" mode="ios" shape="round">
       Personal
     </ion-button>
-    <ion-button (click)="viewServices()"  mode="ios" shape="round">
+    <ion-button (click)="viewServices()" mode="ios" shape="round">
       Servicios
     </ion-button>
-    <ion-button (click)="viewProducts()"  mode="ios" shape="round">
+    <ion-button (click)="viewProducts()" mode="ios" shape="round">
       Productos
     </ion-button>
-    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" shape="round">
       Pedidos
     </ion-button>
   </div>
 
   <!-- ====================== ADMINISTRATIVO  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'administrativo'">
-    <ion-button (click)="viewAtteentions()"  mode="ios" shape="round">
+    <ion-button (click)="viewAtteentions()" mode="ios" shape="round">
       Atenciones
     </ion-button>
-    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" shape="round">
       Pedidos
     </ion-button>
-    <ion-button (click)="scheduleAppointment()"   mode="ios" shape="round">
+    <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
       Agendar Horas
     </ion-button>
   </div>
 
   <!-- ====================== MECANICO  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'mecanico'">
-    <ion-button (click)="viewPersonal()"  mode="ios" shape="round">
+    <ion-button (click)="viewPersonal()" mode="ios" shape="round">
       Atenciones
     </ion-button>
-    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" shape="round">
       Pedidos
     </ion-button>
-    <ion-button (click)="viewOrders()"   mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" shape="round">
       Agendar Horas
     </ion-button>
   </div>
 
   <!-- ====================== CLIENTE  ====================== -->
-  <div class="d-flex-center" *ngIf="rol === 'cliente'">
-    <ion-button (click)="obtUbicacion()" expand="block" mode="ios" shape="round">
+  <div *ngIf="rol === 'cliente'">
+    <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
+      Agendar Hora
+    </ion-button>
+    <ion-button (click)="obtUbicacion()"  mode="ios" shape="round">
       Obtener ubicación
     </ion-button>
+    <ion-button (click)="showHours()"  mode="ios" shape="round">Tus Horas</ion-button>
+  </div>
+  <div *ngIf="mostrarHoras">
+    <div>
+      <div>
+        <ion-list>
+          <h2 class="hour">Horas Pendientes de Aprobación</h2>
+          <ion-item-group *ngFor="let attention of attentions">
+            <ion-item-divider *ngIf="attention.status === 'Pendiente' && attention.cliente_id === uid">
+              <ion-label>
+                <h2>Nombre: {{ attention.name}}</h2>
+                <p>Fecha: {{ attention.date }}</p>
+                <p>Celular: {{ attention.phone }}</p>
+                <p>Correo: {{ attention.email }}</p>
+                <p>Vehiculo: {{ attention.vehicle }}</p>
+                <p>Descripción: {{ attention.description }}</p>
+              </ion-label>
+              <ion-buttons slot="end">
+                <ion-button color="primary">
+                  <ion-icon class="icon" name="create" size="large"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="confirmCancelAttention(attention)" >
+                  <ion-icon class="icon" name="close" size="large"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-item-divider>
+          </ion-item-group>
+        </ion-list>
+      </div>
+      <div>
+        <ion-list>
+          <h2 class="hour">Horas Aceptadas</h2>
+          <ion-item-group *ngFor="let attention of attentions">
+            <ion-item-divider *ngIf="attention.status === 'Aceptada' && attention.cliente_id === uid">
+              <ion-label>
+                <h2>Nombre: {{ attention.name}}</h2>
+                <p>Fecha: {{ attention.date }}</p>
+                <p>Celular: {{ attention.phone }}</p>
+                <p>Correo: {{ attention.email }}</p>
+                <p>Vehiculo: {{ attention.vehicle }}</p>
+                <p>Descripción: {{ attention.description }}</p>
+              </ion-label>
+            </ion-item-divider>
+          </ion-item-group>
+        </ion-list>
+      </div>
+      <div>
+        <ion-list>
+          <h2 class="hour">Horas Finalizadas</h2>
+          <ion-item-group *ngFor="let attention of attentions">
+            <ion-item-divider *ngIf="attention.status === 'Finalizada' && attention.cliente_id === uid">
+              <ion-label>
+                <h2>Nombre: {{ attention.name}}</h2>
+                <p>Fecha: {{ attention.date }}</p>
+                <p>Celular: {{ attention.phone }}</p>
+                <p>Correo: {{ attention.email }}</p>
+                <p>Vehiculo: {{ attention.vehicle }}</p>
+                <p>Descripción: {{ attention.description }}</p>
+              </ion-label>
+            </ion-item-divider>
+          </ion-item-group>
+        </ion-list>
+      </div>
+      <div>
+        <ion-list>
+          <h2 class="hour">Horas Canceladas</h2>
+          <ion-item-group *ngFor="let attention of attentions">
+            <ion-item-divider *ngIf="attention.status === 'Cancelada' && attention.cliente_id === uid">
+              <ion-label>
+                <h2>Nombre: {{ attention.name}}</h2>
+                <p>Fecha: {{ attention.date }}</p>
+                <p>Celular: {{ attention.phone }}</p>
+                <p>Correo: {{ attention.email }}</p>
+                <p>Vehiculo: {{ attention.vehicle }}</p>
+                <p>Descripción: {{ attention.description }}</p>
+              </ion-label>
+            </ion-item-divider>
+          </ion-item-group>
+        </ion-list>
+      </div>
+    </div>
   </div>
 
   <div class="d-flex-center">

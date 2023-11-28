@@ -11,6 +11,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { PedidosComponent } from 'src/app/shared/component/pedidos/pedidos.component';
 import { AttentionsComponent } from 'src/app/shared/component/attentions/attentions.component';
 import { TakeHoursComponent } from 'src/app/shared/component/take-hours/take-hours.component';
+import { Attentions } from 'src/app/models/user.models';
 
 @Component({
   selector: 'app-perfil',
@@ -23,7 +24,9 @@ export class PerfilPage implements OnInit {
   utilsSvc = inject(UtilsService);
   firestore = inject(AngularFirestore);
   rol: string = '';
+  uid: string = '';
   myCoords: string = '';
+  mostrarHoras: boolean = false;
 
   constructor(private auth: AngularFireAuth, private router: Router) {
     this.auth.authState.subscribe(user => {
@@ -32,10 +35,15 @@ export class PerfilPage implements OnInit {
       } else {
       }
     });
+    
   }
   
   ngOnInit() {
-
+    this.getAttentions();
+  }
+  
+  showHours() { 
+    this.mostrarHoras = !this.mostrarHoras;
   }
 
     /**
@@ -50,7 +58,7 @@ export class PerfilPage implements OnInit {
     }
 
 
-    //   <!-- =========== ADMIN =========== -->
+    //   <!-- =========== ADMIN / MECANICO / ADMINISTRATIVO =========== -->
   // Servicios
   viewServices(){
     this.utilsSvc.presentModal({
@@ -100,6 +108,60 @@ export class PerfilPage implements OnInit {
 
   //   <!-- =========== USUARIO =========== -->
   
+  attentions: Attentions[] = [];
+  getAttentions() {
+    this.firebaseSvc.getAttentions().subscribe((attentions) => {
+      this.attentions = attentions;
+    });
+  }
+  async confirmCancelAttention(attention: Attentions) {
+    await this.utilsSvc.presentAlert({
+      header: 'Anular Atención',
+      message: '¿Quieres cancelar esta hora?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Sí, anular',
+          handler: () => {
+            this.cancelAttention(attention);
+          }
+        }
+      ]
+    });
+  }
+
+  async cancelAttention(attention: Attentions) {
+    const path = `appointments/${attention.id}`; // Actualiza la ruta a la ruta principal
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+    try {
+      await this.firebaseSvc.updateDocument(path, { status: 'Cancelada' });
+      this.utilsSvc.dismissModal({ success: true });
+      this.utilsSvc.presentToast({
+        message: 'Atención cancelada correctamente',
+        duration: 2500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline'
+      });
+    } catch (error) {
+      console.log(error);
+      this.utilsSvc.presentToast({
+        message: 'Problema al cancelar la atención. ' + error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline'
+      });
+    } finally {
+      loading.dismiss();
+    }
+  }
+
+
   // Ubicacion
   async obtUbicacion(){
     const coords = await this.utilsSvc.getLocation();
@@ -120,16 +182,16 @@ export class PerfilPage implements OnInit {
   signOut() {
     this.firebaseSvc.signOut()
   }
-
   getDatosUser( uid: string ){
     const path = 'users'
     const id = uid;
     this.firestore.collection(path).doc(id).valueChanges().subscribe( res => {
       
       
-      const data = res as { perfil: string } | undefined;
+      const data = res as { perfil: string, uid: string} | undefined;
       if (data) {
         this.rol = data.perfil
+        this.uid =  data.uid
       }
     })
     

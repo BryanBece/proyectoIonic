@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductsComponent } from '../add-update-products/add-update-products.component';
 import { Product } from 'src/app/models/user.models';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-productos',
@@ -12,6 +13,8 @@ import { Product } from 'src/app/models/user.models';
 export class ProductosComponent implements OnInit {
   products: any[] = []; // Variable para almacenar los productos
   loading: boolean = false; // Variable para mostrar el loading
+  rol: string = '';
+  firestore = inject(AngularFirestore);
 
   constructor(private firebaseSvc: FirebaseService, private utilsSvc: UtilsService) {}
 
@@ -24,11 +27,24 @@ export class ProductosComponent implements OnInit {
 
     this.firebaseSvc.getProducts().subscribe((products) => {
       this.products = products;
-      console.log(this.products);
       this.loading = false; // Ocultar el loading
     });
   }
-
+  getDatosUser(uid: string) {
+    const path = 'users';
+    const id = uid;
+    this.firestore
+      .collection(path)
+      .doc(id)
+      .valueChanges()
+      .subscribe((res) => {
+        const data = res as { perfil: string } | undefined;
+        if (data) {
+          this.rol = data.perfil;
+        }
+      });
+  }
+  // Abrir modal para crear o actualizar producto
   addUpdateProducts(product?: Product) {
     this.utilsSvc.presentModal({
       component: AddUpdateProductsComponent,

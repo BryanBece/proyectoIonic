@@ -1,7 +1,7 @@
 <app-header [isModal]="true" title="Productos"></app-header>
 <ion-content>
   <!-- NUEVO SERVICIO -->
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="rol === 'Admin'">
     <ion-fab-button (click)="addUpdateProducts()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -18,10 +18,10 @@
         <p>Precio: {{ product.price }}</p>
       </ion-label>
       <ion-buttons slot="end">
-        <ion-button color="primary" (click)="addUpdateProducts(product)">
+        <ion-button color="primary" *ngIf="rol === 'Admin'" (click)="addUpdateProducts(product)">
           <ion-icon class="icon" name="create" ></ion-icon>
         </ion-button>
-        <ion-button color="danger" (click)="confirmDeleteProduct(product)" >
+        <ion-button color="danger" *ngIf="rol === 'Admin'" (click)="confirmDeleteProduct(product)" >
           <ion-icon class="icon" name="trash"></ion-icon>
         </ion-button>
       </ion-buttons>

@@ -4,6 +4,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MenuController } from '@ionic/angular';
 import { getFirestore, setDoc, doc, FirestoreInstances } from '@angular/fire/firestore';
 import { FirebaseService } from './services/firebase.service';
+import { Router } from '@angular/router';
+import { ProductosComponent } from './shared/component/productos/productos.component';
+import { UtilsService } from './services/utils.service';
 
 @Component({
   selector: 'app-root',
@@ -11,14 +14,14 @@ import { FirebaseService } from './services/firebase.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-
+  utilsSvc = inject(UtilsService);
   login: boolean = false;
   firestore = inject(AngularFirestore);
   rol: string = '';
   nombre: string = '';
   firebaseSvc = inject(FirebaseService);
 
-  constructor(private menu: MenuController, private auth: AngularFireAuth) {
+  constructor(private menu: MenuController, private auth: AngularFireAuth, private router: Router) {
     
     
     this.auth.authState.subscribe(user => {
@@ -32,6 +35,13 @@ export class AppComponent {
         console.log('Usuario no logueado');
         this.login = false;
       }
+    });
+  }
+
+  viewProducts() {
+    this.utilsSvc.presentModal({
+      component: ProductosComponent,
+      cssClass: 'modal-fullscreen',
     });
   }
 

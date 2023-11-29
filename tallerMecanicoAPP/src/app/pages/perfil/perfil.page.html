@@ -11,43 +11,43 @@
   <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto"></ion-img>
 
   <!-- ====================== ADMIN  ====================== -->
-  <div class="d-flex-center" *ngIf="rol === 'admin'">
-    <ion-button (click)="viewPersonal()" mode="ios" shape="round">
+  <div class="center" *ngIf="rol === 'admin'">
+    <ion-button (click)="viewPersonal()" class="button-size" mode="ios" shape="round">
       Personal
     </ion-button>
-    <ion-button (click)="viewServices()" mode="ios" shape="round">
+    <ion-button (click)="viewServices()" class="button-size" mode="ios" shape="round">
       Servicios
     </ion-button>
-    <ion-button (click)="viewProducts()" mode="ios" shape="round">
+    <ion-button (click)="viewProducts()" class="button-size" mode="ios" shape="round">
       Productos
     </ion-button>
-    <ion-button (click)="viewOrders()" mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" class="button-size" mode="ios" shape="round">
       Pedidos
     </ion-button>
   </div>
 
   <!-- ====================== ADMINISTRATIVO  ====================== -->
-  <div class="d-flex-center" *ngIf="rol === 'administrativo'">
-    <ion-button (click)="viewAttentions()" mode="ios" shape="round">
+  <div class="center" *ngIf="rol === 'administrativo'">
+    <ion-button (click)="viewAttentions()" mode="ios" class="button-size" shape="round">
       Atenciones
     </ion-button>
-    <ion-button (click)="viewOrders()" mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" class="button-size" shape="round">
       Pedidos
     </ion-button>
-    <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
+    <ion-button (click)="scheduleAppointment()" class="button-size" mode="ios" shape="round">
       Agendar Horas
     </ion-button>
   </div>
 
   <!-- ====================== MECANICO  ====================== -->
-  <div class="d-flex-center" *ngIf="rol === 'mecanico'">
-    <ion-button (click)="viewAttentions()" mode="ios" shape="round">
+  <div class="center" *ngIf="rol === 'mecanico'">
+    <ion-button (click)="viewAttentions()" mode="ios" class="button-size" shape="round">
       Atenciones
     </ion-button>
-    <ion-button (click)="viewOrders()" mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" class="button-size" shape="round">
       Pedidos
     </ion-button>
-    <ion-button (click)="viewOrders()" mode="ios" shape="round">
+    <ion-button (click)="viewOrders()" mode="ios" class="button-size" shape="round">
       Agendar Horas
     </ion-button>
   </div>
@@ -91,14 +91,14 @@
   </div>
 
   <!-- ====================== CLIENTE  ====================== -->
-  <div *ngIf="rol === 'cliente'">
-    <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
+  <div class="center"  *ngIf="rol === 'cliente'" >
+    <ion-button (click)="scheduleAppointment()" mode="ios" shape="round" class="button-size">
       Agendar Hora
     </ion-button>
-    <ion-button (click)="emergency()" mode="ios" shape="round">
+    <ion-button (click)="emergency()" mode="ios" shape="round" class="button-size">
       Grua Emergencia
     </ion-button>
-    <ion-button (click)="showHours()" mode="ios" shape="round">Tus Horas</ion-button>
+    <ion-button (click)="showHours()" mode="ios" shape="round" class="button-size">Tus Horas</ion-button>
   </div>
   <div *ngIf="mostrarHoras">
     <div>

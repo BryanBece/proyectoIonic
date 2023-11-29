@@ -48,9 +48,9 @@ export interface Attentions{
 
 export interface Emergency{
   id: string;
-  name: string;
+  nombre: string;
   email: string;
-  phone: string;
-  vehicle: string;
+  telefono: string;
+  ubicacion: string;
   status: 'Pendiente'| 'Finalizada' ;
 }

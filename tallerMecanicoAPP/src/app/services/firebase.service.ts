@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, User as FirebaseUser } from "firebase/auth";
-import { Pedido, Service, User, Product, Attentions } from '../models/user.models';
+import { Pedido, Service, User, Product, Attentions, Emergency } from '../models/user.models';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { UtilsService } from './utils.service';
@@ -24,6 +24,8 @@ export class FirebaseService {
   orders: Observable<Pedido[]>;
   private attentionsCollection: AngularFirestoreCollection<Attentions>;
   attendances: Observable<Attentions[]>;
+  private emergenciesCollection: AngularFirestoreCollection<Emergency>;
+  emergencies: Observable<Emergency[]>;
 
   auth = inject(AngularFireAuth);
   firestore = inject(AngularFirestore);
@@ -195,6 +197,20 @@ export class FirebaseService {
       })
     );
     return this.attendances;
+  }
+
+  getEmergencies(): Observable<Emergency[]> {
+    this.emergenciesCollection = this.firestore.collection<Emergency>('emergency');
+    this.emergencies = this.emergenciesCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data() as Emergency;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+    return this.emergencies;
   }
 
   // ============ Base de datos ============

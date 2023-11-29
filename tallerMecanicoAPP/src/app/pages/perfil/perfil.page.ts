@@ -11,7 +11,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { PedidosComponent } from 'src/app/shared/component/pedidos/pedidos.component';
 import { AttentionsComponent } from 'src/app/shared/component/attentions/attentions.component';
 import { TakeHoursComponent } from 'src/app/shared/component/take-hours/take-hours.component';
-import { Attentions } from 'src/app/models/user.models';
+import { Attentions, Emergency } from 'src/app/models/user.models';
 import { User } from 'firebase/auth';
 
 @Component({
@@ -43,6 +43,8 @@ export class PerfilPage implements OnInit {
 
   ngOnInit() {
     this.getAttentions();
+    this.getEmergency();
+
   }
 
   showHours() {
@@ -88,7 +90,7 @@ export class PerfilPage implements OnInit {
   }
 
   // Atenciones
-  viewAtteentions() {
+  viewAttentions() {
     this.utilsSvc.presentModal({
       component: AttentionsComponent,
       cssClass: 'modal-fullscreen',
@@ -112,6 +114,108 @@ export class PerfilPage implements OnInit {
       cssClass: 'modal-fullscreen',
     });
   }
+  emergencies: Emergency[] = [];
+  getEmergency() {
+    this.firebaseSvc.getEmergencies().subscribe((emergencies) => {
+      this.emergencies = emergencies;
+    });
+  }
+
+  async confirmCancelEmergency(emergency: Emergency) {
+    await this.utilsSvc.presentAlert({
+      header: 'Anular Emergencia',
+      message: '¿Quieres cancelar esta emergencia?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Sí, anular',
+          handler: () => {
+            this.cancelEmergency(emergency);
+          },
+        },
+      ],
+    });
+  }
+
+  async cancelEmergency(emergency: Emergency) {
+    const path = `emergency/${emergency.id}`; // Actualiza la ruta a la ruta principal
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+    try {
+      await this.firebaseSvc.updateDocument(path, { status: 'Cancelada' });
+      this.utilsSvc.dismissModal({ success: true });
+      this.utilsSvc.presentToast({
+        message: 'Emergencia cancelada correctamente',
+        duration: 2500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline',
+      });
+    } catch (error) {
+      console.log(error);
+      this.utilsSvc.presentToast({
+        message: 'Problema al cancelar la emergencia. ' + error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline',
+      });
+    } finally {
+      loading.dismiss();
+    }
+  }
+
+  async confirmFinishEmergency(emergency: Emergency) {
+    await this.utilsSvc.presentAlert({
+      header: 'Finalizar Emergencia',
+      message: '¿Quieres finalizar esta emergencia?',
+      mode: 'ios',
+      buttons: [
+        {
+          text: 'Cancelar',
+        },
+        {
+          text: 'Sí, finalizar',
+          handler: () => {
+            this.finishEmergency(emergency);
+          },
+        },
+      ],
+    });
+  }
+
+  async finishEmergency(emergency: Emergency) {
+    const path = `emergency/${emergency.id}`; // Actualiza la ruta a la ruta principal
+    const loading = await this.utilsSvc.loading();
+    await loading.present();
+    try {
+      await this.firebaseSvc.updateDocument(path, { status: 'Finalizada' });
+      this.utilsSvc.dismissModal({ success: true });
+      this.utilsSvc.presentToast({
+        message: 'Emergencia finalizada correctamente',
+        duration: 2500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline',
+      });
+    } catch (error) {
+      console.log(error);
+      this.utilsSvc.presentToast({
+        message: 'Problema al finalizar la emergencia. ' + error.message,
+        duration: 2500,
+        color: 'primary',
+        position: 'middle',
+        icon: 'alert-circle-outline',
+      });
+    } finally {
+      loading.dismiss();
+    }
+  }
+
+
 
   //   <!-- =========== USUARIO =========== -->
 
@@ -185,7 +289,7 @@ export class PerfilPage implements OnInit {
     }
   
     const coords = await this.utilsSvc.getLocation();
-    const myCoords = `Ubicación: ${coords.latitude},${coords.longitude}`;
+    const myCoords = `${coords.latitude},${coords.longitude}`;
     this.utilsSvc.presentToast({
       message: 'Se ha enviado la solicitud, espere contacto o llámenos al 987654321.',
       duration: 3500,
@@ -195,7 +299,7 @@ export class PerfilPage implements OnInit {
     });
   
     try {
-      await this.firebaseSvc.addDocument('emergency', { Ubicacion: myCoords, nombre: this.nombre, telefono: this.telefono, email: this.email });
+      await this.firebaseSvc.addDocument('emergency', { ubicacion: myCoords, nombre: this.nombre, telefono: this.telefono, email: this.email, status: 'Pendiente' });
       localStorage.setItem('lastEmergencyRequestDate', currentDate); // Store the current date as the last request date
     } catch (error) {
       console.error('Error al guardar la ubicación en Firebase:', error);

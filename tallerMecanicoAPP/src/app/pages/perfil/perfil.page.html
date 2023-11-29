@@ -28,7 +28,7 @@
 
   <!-- ====================== ADMINISTRATIVO  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'administrativo'">
-    <ion-button (click)="viewAtteentions()" mode="ios" shape="round">
+    <ion-button (click)="viewAttentions()" mode="ios" shape="round">
       Atenciones
     </ion-button>
     <ion-button (click)="viewOrders()" mode="ios" shape="round">
@@ -41,7 +41,7 @@
 
   <!-- ====================== MECANICO  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'mecanico'">
-    <ion-button (click)="viewAtteentions()" mode="ios" shape="round">
+    <ion-button (click)="viewAttentions()" mode="ios" shape="round">
       Atenciones
     </ion-button>
     <ion-button (click)="viewOrders()" mode="ios" shape="round">
@@ -52,15 +52,53 @@
     </ion-button>
   </div>
 
+  <!-- ====================== Emergencias  ====================== -->
+  <div *ngIf="rol === 'mecanico'|| rol === 'administrativo' ">
+    <ion-list>
+      <h2 class="hour">Emergencias Pendientes</h2>
+      <ion-item-group *ngFor="let emergency of emergencies">
+        <ion-item-divider *ngIf="emergency.status === 'Pendiente'">
+          <ion-label>
+            <h2>Nombre: {{ emergency.nombre}}</h2>
+            <p>Celular: {{ emergency.telefono }}</p>
+            <p>Correo: {{ emergency.email }}</p>
+            <p>Ubicación: {{ emergency.ubicacion }}</p>
+          </ion-label>
+          <ion-buttons slot="end">
+            <ion-button color="success" (click)="confirmFinishEmergency(emergency)">
+              <ion-icon class="icon" name="checkmark" size="large"></ion-icon>
+            </ion-button>
+            <ion-button color="danger" (click)="confirmCancelEmergency(emergency)">
+              <ion-icon class="icon" name="close" size="large"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+    <ion-list>
+      <h2 class="hour">Emergencias Finalizadas</h2>
+      <ion-item-group *ngFor="let emergency of emergencies">
+        <ion-item-divider *ngIf="emergency.status === 'Finalizada'">
+          <ion-label>
+            <h2>Nombre: {{ emergency.nombre}}</h2>
+            <p>Celular: {{ emergency.telefono }}</p>
+            <p>Correo: {{ emergency.email }}</p>
+            <p>Ubicación: {{ emergency.ubicacion }}</p>
+          </ion-label>
+        </ion-item-divider>
+      </ion-item-group>
+    </ion-list>
+  </div>
+
   <!-- ====================== CLIENTE  ====================== -->
   <div *ngIf="rol === 'cliente'">
     <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
       Agendar Hora
     </ion-button>
-    <ion-button (click)="emergency()"  mode="ios" shape="round">
+    <ion-button (click)="emergency()" mode="ios" shape="round">
       Grua Emergencia
     </ion-button>
-    <ion-button (click)="showHours()"  mode="ios" shape="round">Tus Horas</ion-button>
+    <ion-button (click)="showHours()" mode="ios" shape="round">Tus Horas</ion-button>
   </div>
   <div *ngIf="mostrarHoras">
     <div>
@@ -81,7 +119,7 @@
                 <ion-button color="primary" (click)="scheduleAppointment(attention)">
                   <ion-icon class="icon" name="create" size="large"></ion-icon>
                 </ion-button>
-                <ion-button color="danger" (click)="confirmCancelAttention(attention)" >
+                <ion-button color="danger" (click)="confirmCancelAttention(attention)">
                   <ion-icon class="icon" name="close" size="large"></ion-icon>
                 </ion-button>
               </ion-buttons>

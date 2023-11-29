@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { AlertController, AlertOptions, LoadingController, ModalController, ModalOptions, ToastController, ToastOptions } from '@ionic/angular';
@@ -9,37 +9,34 @@ import { Geolocation } from '@capacitor/geolocation';
   providedIn: 'root'
 })
 export class UtilsService {
+  constructor(
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private modalCtrl: ModalController,
+    private router: Router,
+    private firestore: AngularFirestore,
+    private alertCtrl: AlertController
+  ) {}
 
-  loadingCtrl = inject(LoadingController);
-  toastCtrl = inject(ToastController);
-  modalCtrl = inject(ModalController);
-  router = inject(Router);
-  firestore = inject(AngularFirestore);
-  alertCtrl = inject(AlertController);
+  async takePicture(promptLabelHeader: string) {
+    return await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl,
+      source: CameraSource.Prompt,
+      promptLabelHeader,
+      promptLabelPhoto: 'Selecciona una imagen',
+      promptLabelPicture: 'Toma una foto',
+    });
+  }
 
-  
+  async presentAlert(opts?: AlertOptions) {
+    const alert = await this.alertCtrl.create(opts);
+    await alert.present();
+  }
 
-async takePicture(promptLabelHeader: string) {
-  return await Camera.getPhoto({
-    quality: 90,
-    allowEditing: true,
-    resultType: CameraResultType.DataUrl,
-    source: CameraSource.Prompt,
-    promptLabelHeader,
-    promptLabelPhoto: 'Selecciona una imagen',
-    promptLabelPicture: 'Toma una foto',
-  });
-};
-
-async presentAlert(opts?: AlertOptions) {
-  const alert = await this.alertCtrl.create(opts);
-
-  await alert.present();
-}
-
-
-  loading() {
-    return this.loadingCtrl.create({ spinner: 'crescent' })
+  async loading() {
+    return await this.loadingCtrl.create({ spinner: 'crescent' });
   }
 
   async presentToast(opts?: ToastOptions) {
@@ -47,11 +44,9 @@ async presentAlert(opts?: AlertOptions) {
     toast.present();
   }
 
-  // Modal
   async presentModal(opts: ModalOptions) {
     const modal = await this.modalCtrl.create(opts);
     await modal.present();
-
     const { data } = await modal.onWillDismiss();
     if (data) {
       return data;
@@ -62,26 +57,21 @@ async presentAlert(opts?: AlertOptions) {
     return this.modalCtrl.dismiss(data);
   }
 
-  // Ubicación
   async getLocation() {
     const coordinates = await Geolocation.getCurrentPosition();
     return coordinates.coords;
   }
 
-  // Navegacion
   routerLink(url: string) {
     return this.router.navigateByUrl(url);
   }
 
-  // Guardar en LocalStorage
   saveInLocalStorage(key: string, value: any) {
-    return localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   }
 
-  // Obtener desde LocalStorage
   getFromLocalStorage(key: string) {
-    return JSON.parse(localStorage.getItem(key));
+    const value = localStorage.getItem(key);
+    return JSON.parse(value);
   }
-
 }
-

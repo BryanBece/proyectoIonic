@@ -102,9 +102,10 @@ export class FirebaseService {
    * @returns Una promesa que se resuelve cuando la sesión se cierra correctamente.
    */
   signOut() {
-    return getAuth().signOut();
     localStorage.removeItem('user');
     this.utilsSvc.routerLink('/login');
+    return getAuth().signOut();
+
   }
 
   /**
@@ -264,27 +265,27 @@ export class FirebaseService {
     return addDoc(collection(getFirestore(), path), data);
   }
 
-// ============ Storage ============
+  // ============ Storage ============
 
-/**
- * Subir una imagen a Firebase Storage.
- * @param path - La ruta de la imagen en Firebase Storage.
- * @param data - Los datos de la imagen a cargar.
- * @returns Una promesa que se resuelve con la URL de la imagen después de cargarla.
- */
-async uploadImage(path: string, data: any) {
-  return uploadString(ref(getStorage(), path), data, 'data_url').then(() => {
-    return getDownloadURL(ref(getStorage(), path));
-  });
-}
+  /**
+   * Subir una imagen a Firebase Storage.
+   * @param path - La ruta de la imagen en Firebase Storage.
+   * @param data - Los datos de la imagen a cargar.
+   * @returns Una promesa que se resuelve con la URL de la imagen después de cargarla.
+   */
+  async uploadImage(path: string, data: any) {
+    return uploadString(ref(getStorage(), path), data, 'data_url').then(() => {
+      return getDownloadURL(ref(getStorage(), path));
+    });
+  }
 
-async getFilePath(url: string) {
-  return ref(getStorage(), url).fullPath;
-}
+  async getFilePath(url: string) {
+    return ref(getStorage(), url).fullPath;
+  }
 
-deleteImage(path: string) {
-  return deleteObject(ref(getStorage(), path));
-}
+  deleteImage(path: string) {
+    return deleteObject(ref(getStorage(), path));
+  }
 
 
 }

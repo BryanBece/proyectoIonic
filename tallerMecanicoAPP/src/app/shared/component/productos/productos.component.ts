@@ -4,6 +4,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateProductsComponent } from '../add-update-products/add-update-products.component';
 import { Product } from 'src/app/models/user.models';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-productos',
@@ -16,7 +17,14 @@ export class ProductosComponent implements OnInit {
   rol: string = '';
   firestore = inject(AngularFirestore);
 
-  constructor(private firebaseSvc: FirebaseService, private utilsSvc: UtilsService) {}
+  constructor(private firebaseSvc: FirebaseService, private utilsSvc: UtilsService, private auth: AngularFireAuth) {
+    this.auth.authState.subscribe((user) => {
+      if (user) {
+        this.getDatosUser(user.uid);
+      } else {
+      }
+    });
+  }
 
   ngOnInit() {
     this.getProducts(); // Obtener los productos al inicializar el componente

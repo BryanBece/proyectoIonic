@@ -17,11 +17,11 @@
         <p>{{ product.description }}</p>
         <p>Precio: {{ product.price }}</p>
       </ion-label>
-      <ion-buttons slot="end">
-        <ion-button color="primary" *ngIf="rol === 'admin'" (click)="addUpdateProducts(product)">
+      <ion-buttons slot="end" *ngIf="rol === 'admin'">
+        <ion-button color="primary" (click)="addUpdateProducts(product)">
           <ion-icon class="icon" name="create" ></ion-icon>
         </ion-button>
-        <ion-button color="danger" *ngIf="rol === 'admin'" (click)="confirmDeleteProduct(product)" >
+        <ion-button color="danger" (click)="confirmDeleteProduct(product)" >
           <ion-icon class="icon" name="trash"></ion-icon>
         </ion-button>
       </ion-buttons>

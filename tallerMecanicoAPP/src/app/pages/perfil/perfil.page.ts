@@ -310,6 +310,7 @@ export class PerfilPage implements OnInit {
   signOut() {
     this.firebaseSvc.signOut();
   }
+  
   getDatosUser(uid: string) {
     const path = 'users';
     const id = uid;

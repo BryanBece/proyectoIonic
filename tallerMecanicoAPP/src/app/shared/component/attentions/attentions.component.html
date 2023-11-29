@@ -1,6 +1,6 @@
 <app-header [isModal]="true" title="Atenciones"></app-header>
 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button (click)="addAttention()">
+  <ion-fab-button (click)="addUpdateAttention()">
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
 </ion-fab>
@@ -20,8 +20,8 @@
             <p>Descripción: {{ attention.description }}</p>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button color="primary">
-              <ion-icon class="icon" name="create" size="large"></ion-icon>
+            <ion-button color="primary" (click)="addUpdateAttention(attention)">
+              <ion-icon class="icon" name="create"  size="large"></ion-icon>
             </ion-button>
             <ion-button color="danger" (click)="confirmCancelAttention(attention)">
               <ion-icon class="icon" name="close" size="large"></ion-icon>
@@ -49,7 +49,7 @@
             <p>Descripción: {{ attention.description }}</p>
           </ion-label>
           <ion-buttons slot="end">
-            <ion-button color="primary">
+            <ion-button color="primary" (click)="addUpdateAttention(attention)">
               <ion-icon class="icon" name="create" size="large"></ion-icon>
             </ion-button>
             <ion-button color="danger" (click)="confirmCancelAttention(attention)">

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, sendPasswordResetEmail, User as FirebaseUser } from "firebase/auth";
 import { Pedido, Service, User, Product, Attentions } from '../models/user.models';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { getFirestore, setDoc, doc, getDoc, addDoc, collection, collectionData, query, updateDoc, deleteDoc } from '@angular/fire/firestore';
@@ -37,6 +37,26 @@ export class FirebaseService {
    */
   getAuth() {
     return getAuth();
+  }
+
+  /**
+   * Obtener el usuario actualmente autenticado.
+   * @returns Una promesa que se resuelve con el objeto de usuario actualmente autenticado.
+   */
+  currentUser(): Promise<FirebaseUser | null> {
+    return new Promise((resolve, reject) => {
+      const auth = this.getAuth();
+      if (auth) {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+          unsubscribe();
+          resolve(user);
+        }, (error) => {
+          reject(error);
+        });
+      } else {
+        resolve(null);
+      }
+    });
   }
 
   /**

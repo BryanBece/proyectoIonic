@@ -45,3 +45,12 @@ export interface Attentions{
   status: 'Pendiente' | 'Aceptada' | 'Finalizada' | 'Cancelada';
 
 }
+
+export interface Emergency{
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  vehicle: string;
+  status: 'Pendiente'| 'Finalizada' ;
+}

@@ -12,6 +12,7 @@ import { PedidosComponent } from 'src/app/shared/component/pedidos/pedidos.compo
 import { AttentionsComponent } from 'src/app/shared/component/attentions/attentions.component';
 import { TakeHoursComponent } from 'src/app/shared/component/take-hours/take-hours.component';
 import { Attentions } from 'src/app/models/user.models';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-perfil',
@@ -19,95 +20,101 @@ import { Attentions } from 'src/app/models/user.models';
   styleUrls: ['./perfil.page.scss'],
 })
 export class PerfilPage implements OnInit {
-
   firebaseSvc = inject(FirebaseService);
   utilsSvc = inject(UtilsService);
   firestore = inject(AngularFirestore);
   rol: string = '';
   uid: string = '';
+  nombre: string = '';
+  telefono: string = '';
+  email: string = '';
   myCoords: string = '';
   mostrarHoras: boolean = false;
 
+
   constructor(private auth: AngularFireAuth, private router: Router) {
-    this.auth.authState.subscribe(user => {
+    this.auth.authState.subscribe((user) => {
       if (user) {
         this.getDatosUser(user.uid);
       } else {
       }
     });
-    
   }
-  
+
   ngOnInit() {
     this.getAttentions();
   }
-  
-  showHours() { 
-    this.mostrarHoras = !this.mostrarHoras;
+
+  showHours() {
+    if (this.rol === 'cliente') {
+      this.mostrarHoras = !this.mostrarHoras;
+    }
   }
 
-    /**
+  /**
    * Función que permite navegar entre componentes
    * mediante la URL
-   * @param $event 
+   * @param $event
    */
-    segmentChanged($event){
-      console.log($event.detail.value);
-      let direction=$event.detail.value;
-      this.router.navigate(['perfil/'+direction]);
-    }
+  segmentChanged($event) {
+    console.log($event.detail.value);
+    let direction = $event.detail.value;
+    this.router.navigate(['perfil/' + direction]);
+  }
 
-
-    //   <!-- =========== ADMIN / MECANICO / ADMINISTRATIVO =========== -->
+  //   <!-- =========== ADMIN / MECANICO / ADMINISTRATIVO =========== -->
   // Servicios
-  viewServices(){
+  viewServices() {
     this.utilsSvc.presentModal({
       component: ServiciosComponent,
       cssClass: 'modal-fullscreen',
-    })
+    });
   }
 
   // Personal
-  viewPersonal(){
+  viewPersonal() {
     this.utilsSvc.presentModal({
       component: PersonalComponent,
-      cssClass: 'modal-fullscreen'
-    })
-  }
-
-  // Productos
-  viewProducts(){
-    this.utilsSvc.presentModal({
-      component: ProductosComponent,
-      cssClass: 'modal-fullscreen'
-    })
-  }
-
-  // Atenciones
-  viewAtteentions(){
-    this.utilsSvc.presentModal({
-      component: AttentionsComponent,
-      cssClass: 'modal-fullscreen'
-    })
-  }
-
-  // Agendar Hora
-  scheduleAppointment(){
-    this.utilsSvc.presentModal({
-      component: TakeHoursComponent,
       cssClass: 'modal-fullscreen',
     });
   }
+
+  // Productos
+  viewProducts() {
+    this.utilsSvc.presentModal({
+      component: ProductosComponent,
+      cssClass: 'modal-fullscreen',
+    });
+  }
+
+  // Atenciones
+  viewAtteentions() {
+    this.utilsSvc.presentModal({
+      component: AttentionsComponent,
+      cssClass: 'modal-fullscreen',
+    });
+  }
+
+  // Agendar Hora
+  scheduleAppointment(attention?: Attentions) {
+    this.utilsSvc.presentModal({
+      component: TakeHoursComponent,
+      cssClass: 'modal-fullscreen',
+      componentProps: {
+        attention
+      }
+    });
+  }
   // Pedidos
-  viewOrders(){
+  viewOrders() {
     this.utilsSvc.presentModal({
       component: PedidosComponent,
-      cssClass: 'modal-fullscreen'
-    })
+      cssClass: 'modal-fullscreen',
+    });
   }
 
   //   <!-- =========== USUARIO =========== -->
-  
+
   attentions: Attentions[] = [];
   getAttentions() {
     this.firebaseSvc.getAttentions().subscribe((attentions) => {
@@ -127,9 +134,9 @@ export class PerfilPage implements OnInit {
           text: 'Sí, anular',
           handler: () => {
             this.cancelAttention(attention);
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
   }
 
@@ -145,7 +152,7 @@ export class PerfilPage implements OnInit {
         duration: 2500,
         color: 'success',
         position: 'middle',
-        icon: 'checkmark-circle-outline'
+        icon: 'checkmark-circle-outline',
       });
     } catch (error) {
       console.log(error);
@@ -154,48 +161,67 @@ export class PerfilPage implements OnInit {
         duration: 2500,
         color: 'primary',
         position: 'middle',
-        icon: 'alert-circle-outline'
+        icon: 'alert-circle-outline',
       });
     } finally {
       loading.dismiss();
     }
   }
 
-
   // Ubicacion
-  async obtUbicacion(){
+  async emergency() {
+    const lastRequestDate = localStorage.getItem('lastEmergencyRequestDate');
+    const currentDate = new Date().toISOString().split('T')[0]; // Get the current date
+  
+    if (lastRequestDate === currentDate) {
+      this.utilsSvc.presentToast({
+        message: 'Ya ha realizado una solicitud de emergencia hoy. Si aun no tiene respuesta, llámenos al 987654321.',
+        duration: 3500,
+        color: 'warning',
+        position: 'middle',
+        icon: 'alert-circle-outline',
+      });
+      return;
+    }
+  
     const coords = await this.utilsSvc.getLocation();
     const myCoords = `Ubicación: ${coords.latitude},${coords.longitude}`;
     this.utilsSvc.presentToast({
-      message: myCoords,
+      message: 'Se ha enviado la solicitud, espere contacto o llámenos al 987654321.',
       duration: 3500,
       color: 'primary',
       position: 'middle',
-      icon: 'alert-circle-outline'
-    })
-    
-    return myCoords;
+      icon: 'alert-circle-outline',
+    });
+  
+    try {
+      await this.firebaseSvc.addDocument('emergency', { Ubicacion: myCoords, nombre: this.nombre, telefono: this.telefono, email: this.email });
+      localStorage.setItem('lastEmergencyRequestDate', currentDate); // Store the current date as the last request date
+    } catch (error) {
+      console.error('Error al guardar la ubicación en Firebase:', error);
+    }
+
   }
-
-
   // Cerrar sesión
   signOut() {
-    this.firebaseSvc.signOut()
+    this.firebaseSvc.signOut();
   }
-  getDatosUser( uid: string ){
-    const path = 'users'
+  getDatosUser(uid: string) {
+    const path = 'users';
     const id = uid;
-    this.firestore.collection(path).doc(id).valueChanges().subscribe( res => {
-      
-      
-      const data = res as { perfil: string, uid: string} | undefined;
-      if (data) {
-        this.rol = data.perfil
-        this.uid =  data.uid
-      }
-    })
-    
+    this.firestore
+      .collection(path)
+      .doc(id)
+      .valueChanges()
+      .subscribe((res) => {
+        const data = res as { perfil: string; uid: string; name: string; telefono: string; email: string } | undefined;
+        if (data) {
+          this.rol = data.perfil;
+          this.uid = data.uid;
+          this.nombre = data.name;
+          this.telefono = data.telefono;
+          this.email = data.email;
+        }
+      });
   }
-
-
 }

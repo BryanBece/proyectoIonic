@@ -41,7 +41,7 @@
 
   <!-- ====================== MECANICO  ====================== -->
   <div class="d-flex-center" *ngIf="rol === 'mecanico'">
-    <ion-button (click)="viewPersonal()" mode="ios" shape="round">
+    <ion-button (click)="viewAtteentions()" mode="ios" shape="round">
       Atenciones
     </ion-button>
     <ion-button (click)="viewOrders()" mode="ios" shape="round">
@@ -57,8 +57,8 @@
     <ion-button (click)="scheduleAppointment()" mode="ios" shape="round">
       Agendar Hora
     </ion-button>
-    <ion-button (click)="obtUbicacion()"  mode="ios" shape="round">
-      Obtener ubicación
+    <ion-button (click)="emergency()"  mode="ios" shape="round">
+      Grua Emergencia
     </ion-button>
     <ion-button (click)="showHours()"  mode="ios" shape="round">Tus Horas</ion-button>
   </div>
@@ -78,7 +78,7 @@
                 <p>Descripción: {{ attention.description }}</p>
               </ion-label>
               <ion-buttons slot="end">
-                <ion-button color="primary">
+                <ion-button color="primary" (click)="scheduleAppointment(attention)">
                   <ion-icon class="icon" name="create" size="large"></ion-icon>
                 </ion-button>
                 <ion-button color="danger" (click)="confirmCancelAttention(attention)" >

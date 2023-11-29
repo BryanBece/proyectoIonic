@@ -20,7 +20,7 @@ export class AttentionsComponent  implements OnInit {
     this.getAttentions();
   }
 
-
+  
 
   getAttentions() {
     this.firebaseSvc.getAttentions().subscribe((attentions) => {
@@ -85,10 +85,13 @@ export class AttentionsComponent  implements OnInit {
     });
   }
   
-  addAttention() {
+  addUpdateAttention(attention?: Attentions) {
     this.utilsSvc.presentModal({
       component: TakeHoursComponent,
       cssClass: 'add-update-modal',
+      componentProps: {
+        attention
+      }
     });
   }
 

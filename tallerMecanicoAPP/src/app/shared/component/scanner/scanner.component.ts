@@ -1,82 +1,137 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
-import { VIDEO_CONFIG } from "./scanner.const";
-import jsQR from "jsqr";
-import { Subject, takeUntil, timer } from "rxjs";
+import { Component, EventEmitter, Inject, Injectable, OnInit, Output } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import {
+  BarcodeScanner,
+  BarcodeFormat,
+  LensFacing,
+  Barcode,
+} from '@capacitor-mlkit/barcode-scanning';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-scanner',
   templateUrl: './scanner.component.html',
-  styleUrls: ['./scanner.component.scss']
+  styleUrls: ['./scanner.component.scss'],
 })
-export class ScannerComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('videoElement') video!: ElementRef<HTMLVideoElement>;
-  @ViewChild('canvas', { static: true }) canvas!: ElementRef<HTMLCanvasElement>;
-  videoStream!: MediaStream;
-  config = { ...VIDEO_CONFIG };
-  private destroy$ = new Subject<void>();
-  result = '';
+@Injectable()
+export class ScannerComponent implements OnInit {
+  @Output()
+  barcode = new EventEmitter<Barcode>();
+  barcodeFormat = BarcodeFormat;
+  barcodes: Barcode[] = [];
+ 
 
-  ngAfterViewInit(): void {
-    this.prepareScanner();
+  constructor(private utilsSvc: UtilsService) {}
+
+  ngOnInit() {}
+
+  formGroup = new UntypedFormGroup({
+    formats: new UntypedFormControl([]),
+    lensFacing: new UntypedFormControl(LensFacing.Back),
+    googleBarcodeScannerModuleInstallState: new UntypedFormControl(0),
+    googleBarcodeScannerModuleInstallProgress: new UntypedFormControl(0),
+  });
+
+  startScan() {
+    // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
+    // However, this means that you have to hide all elements that should not be visible.
+    // You can find an example in our demo repository.
+    // In this case we set a class `barcode-scanner-active`, which then contains certain CSS rules for our app.
+    document.querySelector('body')?.classList.add('barcode-scanner-active');
+    // Add the `barcodeScanned` listener
+    const listener = BarcodeScanner.addListener(
+      'barcodeScanned',
+      result => {
+        this.barcode.emit(result.barcode);
+      },
+    );
+    // Start the barcode scanner
+    BarcodeScanner.startScan();
   }
 
-  async prepareScanner(): Promise<void> {
-    const available = await this.checkCamera();
-    if (available) {
-      this.startScanner();
+  stopScan() {
+    // Make all elements in the WebView visible again
+    document.querySelector('body')?.classList.remove('barcode-scanner-active');
+    // Remove all listeners
+    BarcodeScanner.removeAllListeners();
+    // Stop the barcode scanner
+    BarcodeScanner.stopScan();
+  }
+
+  scanSingleBarcode() {
+    return new Promise(resolve => {
+      document.querySelector('body')?.classList.add('barcode-scanner-active');
+      const listener = BarcodeScanner.addListener(
+        'barcodeScanned',
+        result => {
+          listener.remove();
+          document
+            .querySelector('body')
+            ?.classList.remove('barcode-scanner-active');
+          BarcodeScanner.stopScan();
+          resolve(result.barcode);
+        },
+      );
+      BarcodeScanner.startScan();
+    });
+  }
+
+  async scan() {
+    if (!this.isGoogleBarcodeScannerModuleAvailable()) {
+      await this.installGoogleBarcodeScannerModule();
     }
+    const { barcodes } = await BarcodeScanner.scan({
+      formats: [BarcodeFormat.QrCode],
+    });
+    this.utilsSvc.presentToast({
+      message: 'Se ha escaneado el código correctamente',
+      duration: 3000,
+      color: 'success',
+      position: 'middle',
+      icon: 'checkmark-circle-outline'
+    });
+    this.barcodes = barcodes;
+    return barcodes;
   }
 
-  changeCamera(): void {
-    let { facingMode } = this.config.video;
-    this.config.video.facingMode = facingMode === 'environment' ? 'user' : 'environment';
-    this.startScanner();
+  async isSupported() {
+    const { supported } = await BarcodeScanner.isSupported();
+    return supported;
   }
 
-  async startScanner(): Promise<void> {
-    this.videoStream = await navigator.mediaDevices.getUserMedia(this.config);
-    this.video.nativeElement.srcObject = this.videoStream;
-    this.spyCamera();
+  async enableTorch() {
+    await BarcodeScanner.enableTorch();
   }
 
-  spyCamera(): void {
-    if (this.video.nativeElement && this.canvas.nativeElement) {
-      const { clientWidth, clientHeight } = this.video.nativeElement;
-      this.canvas.nativeElement.width = clientWidth;
-      this.canvas.nativeElement.height = clientHeight;
-      const canvas = this.canvas.nativeElement.getContext('2d');
-      canvas.drawImage(this.video.nativeElement, 0, 0, clientWidth, clientHeight);
-      const inversionAttempts = 'dontInvert';
-      const imageData = canvas.getImageData(0, 0, clientWidth, clientHeight);
-      const qrcode = jsQR(imageData.data, imageData.width, clientHeight, { inversionAttempts });
-      if (qrcode) {
-        const { data } = qrcode;
-        this.result = data;
-      } else {
-        timer(100).pipe(takeUntil(this.destroy$)).subscribe(() => {
-          this.spyCamera();
-        });
-      }
-    }
+  async disableTorch() {
+    await BarcodeScanner.disableTorch();
   }
 
-  async checkCamera(): Promise<boolean> {
-    const cameraPermissions = await navigator.permissions.query({ name: 'camera' } as any);
-    const isOk = cameraPermissions.state !== "denied";
-    const hasMediaDevice = 'mediaDevices' in navigator;
-    const hasUserMedia = 'getUserMedia' in navigator.mediaDevices;
-    if (!hasMediaDevice || (!hasUserMedia && isOk)) {
-      alert("No se puede acceder a la cámara, por favor verifique los permisos de la aplicación.");
-    }
-    return cameraPermissions.state !== "denied";
+  async  toggleTorch() {
+    await BarcodeScanner.toggleTorch();
   }
 
-  ngOnDestroy(): void {
-    if (this.videoStream) {
-      this.videoStream.getTracks().forEach((track) => track.stop());
-    }
-    this.video = null!;
-    this.destroy$.next();
-    this.destroy$.complete();
+  async  isTorchEnabled() {
+    const { enabled } = await BarcodeScanner.isTorchEnabled();
+    return enabled;
+  }
+
+  async isTorchAvailable() {
+    const { available } = await BarcodeScanner.isTorchAvailable();
+    return available;
+  }
+
+  async  openSettings() {
+    await BarcodeScanner.openSettings();
+  }
+
+  async  isGoogleBarcodeScannerModuleAvailable() {
+    const { available } =
+      await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+    return available;
+  }
+
+  async  installGoogleBarcodeScannerModule() {
+    await BarcodeScanner.installGoogleBarcodeScannerModule();
   }
 }

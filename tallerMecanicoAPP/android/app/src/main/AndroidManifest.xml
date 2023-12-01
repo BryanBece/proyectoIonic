@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:hardwareAccelerated="true">
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name=".MainActivity"
@@ -26,6 +30,7 @@
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+            <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="barcode_ui"/>
         </provider>
     </application>
 
@@ -33,6 +38,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+<!-- To get access to the camera. -->
+<uses-permission android:name="android.permission.CAMERA" />
+<!-- To get access to the flashlight. -->
+<uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

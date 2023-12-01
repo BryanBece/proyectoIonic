@@ -3,8 +3,9 @@ import { IonicModule } from '@ionic/angular';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 import firebase from 'firebase/compat/app';
-import { ScannerComponent } from './scanner.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+
+import { ScannerComponent } from './scanner.component';
 
 describe('ScannerComponent', () => {
   let component: ScannerComponent;
@@ -16,10 +17,10 @@ describe('ScannerComponent', () => {
       imports: [
         IonicModule.forRoot(),
         AngularFireModule.initializeApp(environment.firebaseConfig),
-        // Otros imports necesarios
+        // Other necessary imports
       ],
       providers: [
-        // Otros proveedores necesarios
+        // Other necessary providers
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     }).compileComponents();

@@ -7,6 +7,8 @@ import { FirebaseService } from './services/firebase.service';
 import { Router } from '@angular/router';
 import { ProductosComponent } from './shared/component/productos/productos.component';
 import { UtilsService } from './services/utils.service';
+import { ScannerComponent } from './shared/component/scanner/scanner.component';
+import { ClientsProductsComponent } from './shared/component/clients-products/clients-products.component';
 
 @Component({
   selector: 'app-root',
@@ -38,12 +40,27 @@ export class AppComponent {
     });
   }
 
-  viewProducts() {
+  viewProductsADM() {
     this.utilsSvc.presentModal({
       component: ProductosComponent,
       cssClass: 'modal-fullscreen',
     });
   }
+
+  viewProductsCLI() {
+    this.utilsSvc.presentModal({
+      component: ClientsProductsComponent,
+      cssClass: 'modal-fullscreen',
+    });
+  }
+
+  scanQRCode(){
+    this.utilsSvc.presentModal({
+      component: ScannerComponent,
+      cssClass: 'modal-fullscreen',
+    });
+  }
+
 
   getDatosUser( uid: string ){
     const path = 'users'

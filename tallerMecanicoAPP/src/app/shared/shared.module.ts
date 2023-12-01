@@ -15,6 +15,8 @@ import { PedidosComponent } from './component/pedidos/pedidos.component';
 import { AddUpdatePedidoComponent } from './component/add-update-pedido/add-update-pedido.component';
 import { AttentionsComponent } from './component/attentions/attentions.component';
 import { TakeHoursComponent } from './component/take-hours/take-hours.component';
+import { ScannerComponent } from './component/scanner/scanner.component';
+import { ClientsProductsComponent } from './component/clients-products/clients-products.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { TakeHoursComponent } from './component/take-hours/take-hours.component'
     AddUpdatePedidoComponent,
     AttentionsComponent,
     TakeHoursComponent,
+    ScannerComponent,
+    ClientsProductsComponent
   ],
   exports: [
     CustomInputComponent,
@@ -45,7 +49,9 @@ import { TakeHoursComponent } from './component/take-hours/take-hours.component'
     PedidosComponent,
     AddUpdatePedidoComponent,
     AttentionsComponent,
-    TakeHoursComponent
+    TakeHoursComponent,
+    ScannerComponent,
+    ClientsProductsComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,35 @@
+.wrapper__scanner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .video--container {
+    video {
+      width: 100%;
+      border-radius: 6px;
+      border: 1px solid #000000;
+    }
+  }
+  
+  .float-button {
+    float: right;
+    z-index: 10;
+    position: relative;
+    transform: translate(133px, 49px)
+  }
+  
+  .custom-p {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  ion-img{
+    max-width: 150px;
+    max-height: 150px;
+  }
+  
+  

@@ -1,0 +1,19 @@
+<app-header [isModal]="true" title="Escáner QR"></app-header>
+<ion-content>
+  <ion-content>
+    <ion-img src="assets/images/Logo.svg" style="display: block; margin: 0 auto; margin-bottom: 0;"></ion-img>
+    <div class="wrapper__scanner">
+      <ion-button class="float-button" (click)="changeCamera()">R</ion-button>
+      <div class="video--container">
+        <video #videoElement autoplay playsinline></video>
+      </div>
+      <p class="custom-p">{{ "Centre la cámara con el código QR." }}</p>
+      <h1 class="custom-p" *ngIf="result !== ''">Resultado</h1>
+      <a *ngIf="result !== ''" [href]="result" target="_blank">{{ result }}</a>
+      <div class="video--container" style="display: none">
+        <canvas id="canvas" #canvas></canvas>
+      </div>
+    </div>
+  </ion-content>
+</ion-content>
+<app-footer></app-footer>

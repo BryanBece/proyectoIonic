@@ -7,6 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
+<!-- Scan QR-->
+<ion-fab vertical="bottom" horizontal="end" color="medium" slot="fixed">
+  <ion-fab-button (click)="scanQRCode()">
+    <ion-icon name="qr-code"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
 <ion-content [fullscreen]="true" class="ion-align-items-center ion-justify-content-center">
 
   <ion-grid class="ion-align-items-center">

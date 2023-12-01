@@ -86,9 +86,9 @@ export class PedidosComponent implements OnInit {
       });
   }
 
-  async confirmFinishtAttention(order: Pedido) {
+  async confirmFinishOrder(order: Pedido) {
     await this.utilsSvc.presentAlert({
-      header: 'Finalizar Atención',
+      header: 'Finalizar Pedido',
       message: '¿Quieres finalizar este pedido?',
       mode: 'ios',
       buttons: [

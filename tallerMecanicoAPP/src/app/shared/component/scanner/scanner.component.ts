@@ -35,7 +35,6 @@ export class ScannerComponent implements OnInit {
   startScan() {
     // The camera is visible behind the WebView, so that you can customize the UI in the WebView.
     // However, this means that you have to hide all elements that should not be visible.
-    // You can find an example in our demo repository.
     // In this case we set a class `barcode-scanner-active`, which then contains certain CSS rules for our app.
     document.querySelector('body')?.classList.add('barcode-scanner-active');
     // Add the `barcodeScanned` listener
@@ -77,9 +76,8 @@ export class ScannerComponent implements OnInit {
   }
 
   async scan() {
-    if (!this.isGoogleBarcodeScannerModuleAvailable()) {
-      await this.installGoogleBarcodeScannerModule();
-    }
+    this.isGoogleBarcodeScannerModuleAvailable();
+    this.installGoogleBarcodeScannerModule();
     const { barcodes } = await BarcodeScanner.scan({
       formats: [BarcodeFormat.QrCode],
     });

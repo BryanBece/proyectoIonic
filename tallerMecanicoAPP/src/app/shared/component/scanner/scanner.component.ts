@@ -76,6 +76,7 @@ export class ScannerComponent implements OnInit {
   }
 
   async scan() {
+    this.startScan();
     this.isGoogleBarcodeScannerModuleAvailable();
     this.installGoogleBarcodeScannerModule();
     const { barcodes } = await BarcodeScanner.scan({

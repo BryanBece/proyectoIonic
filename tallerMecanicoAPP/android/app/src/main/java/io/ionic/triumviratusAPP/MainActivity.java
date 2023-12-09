@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.duoc.triumviratusAPP;
 
 import com.getcapacitor.BridgeActivity;
 

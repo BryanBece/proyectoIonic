@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "614986730977",
+    "firebase_url": "https://tallertriumviratusapp-default-rtdb.firebaseio.com",
+    "project_id": "tallertriumviratusapp",
+    "storage_bucket": "tallertriumviratusapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614986730977:android:67dec4deeddb0b1692d6a0",
+        "android_client_info": {
+          "package_name": "com.duoc.triumviratusAPP"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYvnGdcHkK61hi713VSzln1uCXRFVyj4M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

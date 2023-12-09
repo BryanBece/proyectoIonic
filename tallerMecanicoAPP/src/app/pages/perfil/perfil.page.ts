@@ -276,7 +276,6 @@ export class PerfilPage implements OnInit {
   async emergency() {
     const lastRequestDate = localStorage.getItem('lastEmergencyRequestDate');
     const currentDate = new Date().toISOString().split('T')[0]; // Get the current date
-  
     if (lastRequestDate === currentDate) {
       this.utilsSvc.presentToast({
         message: 'Ya ha realizado una solicitud de emergencia hoy. Si aun no tiene respuesta, llámenos al 987654321.',
@@ -287,7 +286,11 @@ export class PerfilPage implements OnInit {
       });
       return;
     }
-  
+    const hasLocationPermission = await this.utilsSvc.hasLocationPermission();
+    if (!hasLocationPermission) {
+      this.utilsSvc.requestLocationPermission();
+      return;
+    }
     const coords = await this.utilsSvc.getLocation();
     const myCoords = `${coords.latitude},${coords.longitude}`;
     this.utilsSvc.presentToast({
@@ -297,14 +300,12 @@ export class PerfilPage implements OnInit {
       position: 'middle',
       icon: 'alert-circle-outline',
     });
-  
     try {
       await this.firebaseSvc.addDocument('emergency', { ubicacion: myCoords, nombre: this.nombre, telefono: this.telefono, email: this.email, status: 'Pendiente' });
       localStorage.setItem('lastEmergencyRequestDate', currentDate); // Store the current date as the last request date
     } catch (error) {
       console.error('Error al guardar la ubicación en Firebase:', error);
     }
-
   }
   // Cerrar sesión
   signOut() {

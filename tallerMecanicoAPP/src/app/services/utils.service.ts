@@ -74,4 +74,36 @@ export class UtilsService {
     const value = localStorage.getItem(key);
     return JSON.parse(value);
   }
+
+  async hasLocationPermission() {
+    // Check if location permission is granted
+    const permission = await Geolocation.checkPermissions();
+    if (permission.location === 'granted') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async requestLocationPermission() {
+    // Request location permission
+    const permission = await Geolocation.requestPermissions();
+    if (permission.location === 'granted') {
+      this.presentToast({
+        message: 'Permiso de ubicación concedido.',
+        duration: 2500,
+        color: 'success',
+        position: 'middle',
+        icon: 'checkmark-circle-outline',
+      });
+    } else {
+      this.presentToast({
+        message: 'Permiso de ubicación denegado.',
+        duration: 2500,
+        color: 'danger',
+        position: 'middle',
+        icon: 'close-circle-outline',
+      });
+    }
+  }
 }

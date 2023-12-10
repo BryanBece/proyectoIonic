@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-        <string>Triumviratus APP</string>
+    <string>Triumviratus APP</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -45,5 +45,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs access to your camera to take pictures.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs access to your photo library to save pictures.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photo library to read pictures.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app needs access to your location at all times to provide location-based services.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location when in use to provide location-based services.</string>
 </dict>
 </plist>
